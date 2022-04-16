@@ -10,6 +10,10 @@ from collections import namedtuple, deque
 from itertools import count
 
 
+def tuple_of_tensors_to_tensor(tuple_of_tensors):
+    return torch.stack(list(tuple_of_tensors), dim=0)
+
+
 env = Fire.FarmEnv()
 NUM_STATES = env.observation_space.n
 print("Total number of states: ", NUM_STATES)
@@ -19,15 +23,12 @@ print("Number of possible actions: ", NUM_ACTIONS)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("available device is:", device)
 
-Transition = namedtuple('Transition',
-                        ('state', 'action', 'next_state', 'reward'))
+Transition = namedtuple('Transition', ('state', 'action', 'next_state', 'reward'))
 
 memory_size = 10000
 batch_size = 32
 
 
-# input: State
-# output: q values
 class DQN(nn.Module):
 
     def __init__(self):
@@ -65,7 +66,9 @@ memory = replay.ReplayMemory(10000)
 steps_done = 0
 
 
-def select_action(state):
+def select_action(current_state):
+
+    current_state = torch.tensor(current_state)
     global steps_done
     sample = random.random()
     eps_threshold = EPS_END + (EPS_START - EPS_END) * \
@@ -73,16 +76,16 @@ def select_action(state):
     steps_done += 1
     if sample > eps_threshold:
         with torch.no_grad():
-            return q_net(state).max(1)[1].view(1, 1)
+            return q_net(current_state).max(1)[1].view(1, 1)
     else:
         return torch.tensor([[random.randrange(NUM_ACTIONS)]], device=device, dtype=torch.long)
 
 
 episode_durations = []
-print(len(memory))
+
 
 def optimize_model():
-
+    # Not enough data to optimize the model
     if len(memory) < batch_size:
         return
 
@@ -118,10 +121,29 @@ num_episodes = 50
 for i_episode in range(num_episodes):
     env.reset()
     for t in count():
+
         state = env.state
         action = select_action(state)
-        _, reward, done, _ = env.step(action.item())
+        action = action.cpu().detach().numpy()
+        # converting the tensor to int
+        action = action[0]
+        action = action[0]
+        next_state, reward, done, _ = env.step(action)
+
         reward = torch.tensor([reward], device=device)
+        memory.push(state, action, next_state, reward)
+        state = next_state
+        # optimizing the model
+        optimize_model()
+
+        # if done:
+        #     episode_durations.append(t + 1)
+        #     break
+
+
+
+
+
 
 
 

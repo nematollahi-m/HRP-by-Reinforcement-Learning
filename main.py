@@ -7,7 +7,7 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 
-MAX_ALLOWED_WORKER = 12
+MAX_ALLOWED_WORKER = 30
 BUDGET = 6500
 PLANTS = 45000
 WAGE = 17
@@ -98,7 +98,7 @@ epsilon = 0.2
 all_epochs = []
 all_penalties = []
 
-for i in range(1, 100):
+for i in range(1, 200):
 
     r = 0
     state = env.reset()
@@ -127,7 +127,7 @@ for i in range(1, 100):
 
         state = next_state
 
-    all_penalties.append(r)
+    all_penalties.append(r/100)
     if i % 100 == 0:
         print(f"Episode: {i}")
 
@@ -135,4 +135,4 @@ print("Training finished.\n")
 plt.plot(all_penalties)
 plt.show()
 
-print(q_table)
+#print(q_table)

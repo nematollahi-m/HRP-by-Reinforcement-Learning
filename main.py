@@ -7,12 +7,12 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 
-MAX_ALLOWED_WORKER = 30
-BUDGET = 6500
-PLANTS = 45000
-WAGE = 17
-PRODUCTIVITY = 3
-HIRE_COST = 30
+MAX_ALLOWED_WORKER = 5
+BUDGET = 5000
+PLANTS = 10000
+WAGE = 20
+PRODUCTIVITY = 700
+HIRE_COST = 80
 PRUNE = 31
 REWARD_PRUNE = 8
 PENALTY_UNPRUNE = 1
@@ -98,7 +98,7 @@ epsilon = 0.2
 all_epochs = []
 all_penalties = []
 
-for i in range(1, 200):
+for i in range(1, 100):
 
     r = 0
     state = env.reset()
@@ -135,4 +135,4 @@ print("Training finished.\n")
 plt.plot(all_penalties)
 plt.show()
 
-#print(q_table)
+print(q_table)

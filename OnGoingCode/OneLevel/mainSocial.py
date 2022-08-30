@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from stable_baselines3.common.results_plotter import load_results, ts2xy
-from CostObjective import FarmEnvCost
+from SocialENV import FarmEnvSocial
 import os
 from stable_baselines3.common.monitor import Monitor
 from SaveResults import SaveOnBestTrainingRewardCallback
@@ -26,6 +26,7 @@ def plot_results(log_folder, title='Learning Curve'):
     plt.title(title + " Smoothed")
     plt.show()
 
+
 if th.cuda.is_available():
     print('GPU is available')
     device = 'cuda'
@@ -33,38 +34,37 @@ else:
     print('No GPU')
     device = 'cpu'
 
-Cost_ENV = FarmEnvCost()
 
-log_dir = "tmp/cost/"
+Env_Social = FarmEnvSocial()
+
+log_dir = "tmp/social/"
 os.makedirs(log_dir, exist_ok=True)
-env_cost = Monitor(Cost_ENV, log_dir)
+env_social = Monitor(Env_Social, log_dir)
 callback = SaveOnBestTrainingRewardCallback(check_freq=1000, log_dir=log_dir)
 
-cost_model = DQN('MlpPolicy', env_cost, exploration_fraction=0.8, exploration_final_eps=0.02,
-                 exploration_initial_eps=1.0, verbose=1, device=device)
-cost_model.learn(total_timesteps=time_steps, callback=callback)
+social_model =DQN('MlpPolicy', env_social, exploration_fraction=0.8, exploration_final_eps=0.02,
+                  exploration_initial_eps=1.0, verbose=1, device=device)
+social_model.learn(total_timesteps=time_steps, callback=callback)
 
 # plotting results
 plot_results(log_dir)
 
 
 # Testing the model
-obs_cost = env_cost.reset()
-done_cost = False
+obs_social = env_social.reset()
+done_social = False
 
 n_steps = PRUNE_LENGTH
 print("########################## Testing the model ############################")
 for step in range(n_steps):
-
     mapping = tuple(np.ndindex((MAX_ALLOWED_WORKER + 1, MAX_ALLOWED_WORKER + 1)))
-    action_cost, _ = cost_model.predict(obs_cost, deterministic=True)
-    action_cost_unroll = mapping[action_cost]
-    obs_cost, reward_cost, done_cost, info = env_cost.step(action_cost)
-    print(" *** Best Action *** ", action_cost_unroll)
-    print('State = ', obs_cost, 'reward = ', reward_cost, 'done = ', done_cost)
-    if done_cost is True:
+    action_social, _ = social_model.predict(obs_social, deterministic=True)
+    action_social_unroll = mapping[action_social]
+    obs_social, reward_social, done_social, info = env_social.step(action_social)
+    print(" *** Best Action *** ", action_social_unroll)
+    print('State = ', obs_social, 'reward = ', reward_social, 'done = ', done_social)
+    if done_social is True:
         break
 
-print('Total cost of pruning: ', BUDGET - obs_cost[1], ', Initial Budget: ', BUDGET)
-print('Total Pruned Plants: ', PLANTS - obs_cost[2], ', Initial Number of Plants: ', PLANTS)
-
+print('Total cost of pruning: ', BUDGET - obs_social[1], ', Initial Budget: ', BUDGET)
+print('Total Pruned Plants: ', PLANTS - obs_social[2], ', Initial Number of Plants: ', PLANTS)

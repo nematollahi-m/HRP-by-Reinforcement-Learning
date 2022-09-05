@@ -76,7 +76,7 @@ class FarmEnvCost(Env):
                     # r_t = (pl_t/PLANTS) / (c_t/BUDGET)
                     # r_t = ((int(p_t)/PLANTS) - (c_t/BUDGET)) * M
                     # r_t = (b_t - c_t) * M
-                    r_t = (1 - (c_t/BUDGET)) * M
+                    r_t = ( ((b_t - c_t)/BUDGET)) * M
                 done = True
                 return self.state, r_t, done, info
 

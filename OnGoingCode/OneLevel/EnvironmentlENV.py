@@ -60,7 +60,7 @@ class FarmEnvEnv(Env):
                 if c_t == 0:
                     r_t = -M
                 else:
-                    r_t = (QUALITY - (c_t / BUDGET)) * M
+                    r_t = (QUALITY) * M
                 done = True
                 return self.state, r_t, done, info
 
@@ -83,7 +83,7 @@ class FarmEnvEnv(Env):
         if c_t == 0 or pl_t == 0:
             r_t = -M
         else:
-            r_t = QUALITY * (pl_t / PLANTS) - (c_t / BUDGET)
+            r_t = QUALITY * (pl_t / PLANTS)
 
         self.state = np.asarray([m_t, b_t - int(c_t), p_t - int(pl_t)])
         self.prune_len -= 1

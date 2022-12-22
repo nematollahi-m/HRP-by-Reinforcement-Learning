@@ -1,17 +1,18 @@
 import numpy as np
 from stable_baselines3 import DQN
-from newEconomic import EconomicEnvNew
-from EnvironmentNew import EnvironmentEnv
-from SocialNew import SocialEnv
+from EconomicObj import EconomicEnv
+from EnvironmentObj import EnvironmentEnv
+from SocialObj import SocialEnv
 from Parameters import *
 from stable_baselines3.common.utils import obs_as_tensor
 from saveFunctions import *
 import math
+import warnings
+warnings.filterwarnings('ignore')
 
 
 '''
-    Before running this code make sure mainCost, mainEnvironment, and mainSocial has been executed and models are 
-    trained.
+    Before running this code make sure three environments need to be trained and add to model and tmp folders. 
 '''
 
 def calculate_constants(rho1, x_best, x_worst):
@@ -48,12 +49,10 @@ def choose_action(obs_econ, econ_model, obs_env, env_model, obs_social, social_m
         q_value_env = env_model.q_net(observation_env)
         q_value_social = social_model.q_net(observation_social)
 
-
     q_value_econ_np = q_value_econ.numpy()
     best_econ = np.max(q_value_econ_np)
     worst_econ = np.min(q_value_econ_np)
 
-    ################################ test
     q_value_econ_np = (q_value_econ - worst_econ) / (best_econ - worst_econ)
     best_econ = np.max(q_value_econ_np.numpy())
     worst_econ = np.min(q_value_econ_np.numpy())
@@ -61,20 +60,16 @@ def choose_action(obs_econ, econ_model, obs_env, env_model, obs_social, social_m
     q_value_env_np = q_value_env.numpy()
     best_env = np.max(q_value_env_np)
     worst_env = np.min(q_value_env_np)
-    ################################ test
     q_value_env_np = (q_value_env_np - worst_env) / (best_env - worst_env)
     best_env = np.max(q_value_env_np)
     worst_env = np.min(q_value_env_np)
-    #print(q_value_env_np)
 
     q_value_social_np = q_value_social.numpy()
     best_social = np.max(q_value_social_np)
     worst_social = np.min(q_value_social_np)
-    ################################ test
     q_value_social_np = (q_value_social_np - worst_social) / (best_social - worst_social)
     best_social = np.max(q_value_social_np)
     worst_social = np.min(q_value_social_np)
-    #print(q_value_social_np)
 
     con_econ_m, con_econ_n = calculate_constants(rho, best_econ, worst_econ)
     con_env_m, con_env_n = calculate_constants(rho, best_env, worst_env)
@@ -90,56 +85,51 @@ def choose_action(obs_econ, econ_model, obs_env, env_model, obs_social, social_m
         utilities_social[i] = calculate_utility(rho, con_social_m, con_social_n, q_value_social_np[0, i])
 
     total_utility = (lambda_econ * utilities_econ) + (lambda_env * utilities_env) + (lambda_social * utilities_social)
-    q_value_econ_np = q_value_econ_np.numpy()
     new_action_id = np.argmax(total_utility)
+
     return new_action_id
 
 
 def main():
-    # checking for cuda availability
-    if th.cuda.is_available():
-        print('GPU is available')
-        device = 'cuda'
-    else:
-        print('No GPU')
-        device = 'cpu'
 
-    # plotting the results of training three objectives:
-    log_dir_econ = "tmp/Economic/"
-    log_dir_env = "tmp/Environmental/"
-    log_dir_social = "tmp/Social/"
-    x_econ, y_econ = plot_results_test(log_dir_econ)
-    x_env, y_env = plot_results_test(log_dir_env)
-    x_social, y_social = plot_results_test(log_dir_social)
+    # # plotting the results of training three objectives:
+    # log_dir_econ = "tmp/Economic/"
+    # log_dir_env = "tmp/Environmental/"
+    # log_dir_social = "tmp/Social/"
+    # x_econ, y_econ = plot_results_test(log_dir_econ)
+    # x_env, y_env = plot_results_test(log_dir_env)
+    # x_social, y_social = plot_results_test(log_dir_social)
+    #
+    # title = 'Learning Curve'
+    # fig = plt.figure(title)
+    # plt.plot(x_econ, y_econ, 'r')
+    # plt.plot(x_env, y_env, 'b')
+    # plt.plot(x_social, y_social, 'g')
+    # plt.xlabel('Number of Timesteps')
+    # plt.ylabel('Rewards')
+    # plt.title(title)
+    # plt.legend(["Econ","Env","Soc"])
+    # plt.show()
 
-    title = 'Learning Curve'
-    fig = plt.figure(title)
-    plt.plot(x_econ, y_econ, 'r')
-    plt.plot(x_env, y_env, 'b')
-    plt.plot(x_social, y_social, 'g')
-    plt.xlabel('Number of Timesteps')
-    plt.ylabel('Rewards')
-    plt.title(title)
-    plt.legend(["Econ","Env","Soc"])
-    plt.show()
-
-    # Utility function
+    # loading trained models
     econ_model = DQN.load("model/economic_model")
     env_model = DQN.load("model/environmental_model")
     social_model = DQN.load("model/social_model")
 
-    Econ_ENV = EconomicEnvNew()
-    Env_EnV = EnvironmentEnv()
-    Social_Env = SocialEnv()
+    econ_env = EconomicEnv()
+    env_env = EnvironmentEnv()
+    social_env = SocialEnv()
 
-    obs_econ = Econ_ENV.reset()
-    obs_env = Env_EnV.reset()
-    obs_social = Social_Env.reset()
+    obs_econ = econ_env.reset()
+    obs_env = env_env.reset()
+    obs_social = social_env.reset()
     n_steps = PRUNE_LENGTH
+
     print('******************************************************')
+
     track_reward_econ = []
     track_reward_env = []
-    track_reward_socail = []
+    track_reward_social = []
 
     for step in range(n_steps):
 
@@ -151,45 +141,39 @@ def main():
         new_action = mapping[action_id]
         print(new_action)
 
-        action_econ, _ = econ_model.predict(obs_econ, deterministic=False)
-        action_econ_unroll = mapping[action_econ]
-        action_env, _ = env_model.predict(obs_econ, deterministic=False)
-        action_env_unroll = mapping[action_env]
-        action_social, _ = social_model.predict(obs_social, deterministic=False)
-        action_social_unroll = mapping[action_social]
+        # action_econ, _ = econ_model.predict(obs_econ, deterministic=False)
+        # action_econ_unroll = mapping[action_econ]
+        # print("Stable baseline prediction econ:", action_econ_unroll)
+        # action_env, _ = env_model.predict(obs_econ, deterministic=False)
+        # action_env_unroll = mapping[action_env]
+        # print("Stable baseline prediction env:", action_env_unroll)
+        # action_social, _ = social_model.predict(obs_social, deterministic=False)
+        # action_social_unroll = mapping[action_social]
+        # print("Stable baseline prediction social:", action_social_unroll)
 
         np.random.seed(step + 110)
-        obs_econ, reward_econ, done_econ, info = Econ_ENV.step(action_id)
+        obs_econ, reward_econ, done_econ, info = econ_env.step(action_id)
         track_reward_econ = np.append(track_reward_econ, reward_econ)
-        # print('econ')
-        # print(obs_econ)
         np.random.seed(step + 110)
-        obs_env, reward_env, done_env, info = Env_EnV.step(action_id)
+        obs_env, reward_env, done_env, info = env_env.step(action_id)
         track_reward_env = np.append(track_reward_env, reward_env)
-        # print('env')
-        # print(obs_env)
         np.random.seed(step + 110)
-        obs_social, reward_social, done_social, info = Social_Env.step(action_id)
-        track_reward_socail = np.append(track_reward_socail, reward_social)
-        # print('social')
-        # print(obs_social)
+        obs_social, reward_social, done_social, info = social_env.step(action_id)
+        track_reward_social = np.append(track_reward_social, reward_social)
 
-        # print("Best Overall action= ", new_action)
-        # print("Best action Based on Economic Objective= ", action_econ_unroll)
-        # print("Best action Based on Environmental Objective= ", action_env_unroll)
-        # print("Best action Based on Social Objective= ", action_social_unroll)
+        print('Economic State= ', obs_econ, 'Economic Reward= ', reward_econ)
 
-        print('Cost State= ', obs_econ, 'reward= ', reward_econ, 'done= ', done_econ)
-        print('Environment State= ', obs_env, 'reward= ', reward_env, 'done= ', done_env)
-        print('Social State= ', obs_social, 'reward= ', reward_social, 'done= ', done_social)
+        print('Environment State= ', obs_env, 'Environmental Reward= ', reward_env)
+
+        print('Social State= ', obs_social, 'Social Reward= ', reward_social)
+        print('******************************************************')
 
         if done_econ is True:
-            remining_b1 = round(Social_Env.budget, 3)
-            print('Remaining Budget = ', str(remining_b1) + '/' + str(BUDGET), 'Unpruned Plants = ',
-                  str(Social_Env.plants) + '/' + str(PLANTS))
+            remining_b1 = round(social_env.budget, 3)
+            print('Remaining Budget = ', str(remining_b1) + '/' + str(BUDGET), 'Un-pruned Plants = ',
+                  str(social_env.plants) + '/' + str(PLANTS))
             break
 
-    # print(track_reward)
     print('done')
 
 if __name__ == '__main__':

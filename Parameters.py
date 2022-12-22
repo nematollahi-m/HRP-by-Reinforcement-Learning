@@ -1,5 +1,7 @@
 
-""" model parameters """
+"""
+    model parameters
+"""
 
 MAX_ALLOWED_WORKER = 12
 BUDGET = 100000

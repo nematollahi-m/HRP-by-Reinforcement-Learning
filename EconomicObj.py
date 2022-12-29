@@ -39,6 +39,7 @@ class EconomicEnv(Env):
         h_i_t = new_action[1]
         h_a_t = new_action[2]
 
+
         availability_beg = round(np.random.normal(WORKER_AVAILABILITY_BEG, 3))
         availability_int = round(np.random.normal(WORKER_AVAILABILITY_INT, 2))
         availability_adv = round(np.random.normal(WORKER_AVAILABILITY_ADV, 1))

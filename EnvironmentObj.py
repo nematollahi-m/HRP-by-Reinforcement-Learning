@@ -3,7 +3,6 @@ from gym.spaces import Discrete, Box
 import numpy as np
 from Parameters import *
 
-
 class EnvironmentEnv(Env):
     def __init__(self):
         super().__init__()

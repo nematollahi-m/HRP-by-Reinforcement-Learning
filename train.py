@@ -1,19 +1,16 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import os
 import torch as th
 from stable_baselines3.common.results_plotter import load_results, ts2xy
 from stable_baselines3.common.callbacks import BaseCallback
 from stable_baselines3.common.monitor import Monitor
-from stable_baselines3.common.evaluation import evaluate_policy
-from stable_baselines3.dqn.policies import MlpPolicy
 from stable_baselines3 import DQN
-from gym import Env
-from gym.spaces import Discrete, Box
 from Parameters import *
 from EconomicObj import EconomicEnv
 from EnvironmentObj import EnvironmentEnv
 from SocialObj import SocialEnv
+import warnings
+warnings.filterwarnings('ignore')
 
 
 class SaveOnBestTrainingRewardCallback(BaseCallback):
@@ -76,6 +73,18 @@ economic_model = DQN('MlpPolicy', economic_env, learning_rate=0.0001, exploratio
                      exploration_initial_eps=1.0, verbose=1, device=device)
 economic_model.learn(total_timesteps=time_steps, callback=callback)
 
+# saving the model
+economic_model.save("model/economic_model")
+loaded_economic_model = DQN.load("model/economic_model")
+print(f"The loaded_model has {loaded_economic_model.replay_buffer.size()} transitions in its buffer")
+
+economic_model.save_replay_buffer("model/economic_model_replay_buffer")
+loaded_economic_model.load_replay_buffer("model/economic_model_replay_buffer")
+print(f"The loaded_model has {loaded_economic_model.replay_buffer.size()} transitions in its buffer")
+
+economic_policy = economic_model.policy
+economic_policy.save("model/economic_policy")
+
 """
     Training Environment Agent - saving the model
 """
@@ -88,6 +97,18 @@ callback = SaveOnBestTrainingRewardCallback(check_freq=1000, log_dir=log_dir)
 environmnet_model = DQN('MlpPolicy', environmnet_env, learning_rate=0.0001, exploration_fraction=0.8, exploration_final_eps=0.001,
                      exploration_initial_eps=1.0, verbose=1, device=device, tensorboard_log="./dqn_environmnet/")
 environmnet_model.learn(total_timesteps=time_steps, callback=callback)
+
+# saving the model
+environmnet_model.save("model/environmental_model")
+loaded_environmnet_model = DQN.load("model/environmental_model")
+print(f"The loaded_model has {loaded_environmnet_model.replay_buffer.size()} transitions in its buffer")
+
+environmnet_model.save_replay_buffer("model/environmental_model_replay_buffer")
+loaded_environmnet_model.load_replay_buffer("model/environmental_model_replay_buffer")
+print(f"The loaded_model has {loaded_environmnet_model.replay_buffer.size()} transitions in its buffer")
+
+environmnet_policy = environmnet_model.policy
+environmnet_policy.save("model/environmental_policy")
 
 """
     Training Social Agent - saving the model

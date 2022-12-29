@@ -1,7 +1,5 @@
 
-"""
-    model parameters
-"""
+""" model parameters """
 
 MAX_ALLOWED_WORKER = 12
 BUDGET = 100000
@@ -35,16 +33,15 @@ QUALITY_ADV = 1074.10
 
 action_size = ((MAX_ALLOWED_WORKER + 1) * (MAX_ALLOWED_WORKER + 1)) ** 3
 
-
+# Reward constant
 M = 10
-rho = 3
+# Utility function
+rho = -3
 
+# Economic, Environmental, and Social Coefficients
 lambda_econ = 0.25
-lambda_env = 0.25
-lambda_social = 0.5
+lambda_env = 0.5
+lambda_social = 0.25
 
+# number of training time steps
 time_steps = 400000
-
-Num_acr = 1450
-
-

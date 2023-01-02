@@ -84,7 +84,7 @@ class EconomicEnv(Env):
                 done = True
                 return self.state, r_t, done, info
             else:
-                self.state = np.asarray([m_b_t, m_i_t, m_a_t, 0, 1])
+                self.state = np.asarray([m_b_t, m_i_t, m_a_t])
                 self.plants = 0
                 self.budget = self.budget - c_t
 

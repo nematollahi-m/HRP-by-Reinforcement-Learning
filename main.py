@@ -12,7 +12,7 @@ warnings.filterwarnings('ignore')
 
 
 '''
-    Before running this code make sure three environments need to be trained and add to model and tmp folders. 
+    Before running this code make sure three environments are trained and saved in model folder. 
 '''
 
 def calculate_constants(rho1, x_best, x_worst):
@@ -141,15 +141,15 @@ def main():
         new_action = mapping[action_id]
         print(new_action)
 
-        # action_econ, _ = econ_model.predict(obs_econ, deterministic=False)
-        # action_econ_unroll = mapping[action_econ]
-        # print("Stable baseline prediction econ:", action_econ_unroll)
-        # action_env, _ = env_model.predict(obs_econ, deterministic=False)
-        # action_env_unroll = mapping[action_env]
-        # print("Stable baseline prediction env:", action_env_unroll)
-        # action_social, _ = social_model.predict(obs_social, deterministic=False)
-        # action_social_unroll = mapping[action_social]
-        # print("Stable baseline prediction social:", action_social_unroll)
+        action_econ, _ = econ_model.predict(obs_econ, deterministic=True)
+        action_econ_unroll = mapping[action_econ]
+        print("Stable baseline prediction econ:", action_econ_unroll)
+        action_env, _ = env_model.predict(obs_econ, deterministic=True)
+        action_env_unroll = mapping[action_env]
+        print("Stable baseline prediction env:", action_env_unroll)
+        action_social, _ = social_model.predict(obs_social, deterministic=True)
+        action_social_unroll = mapping[action_social]
+        print("Stable baseline prediction social:", action_social_unroll)
 
         np.random.seed(step + 110)
         obs_econ, reward_econ, done_econ, info = econ_env.step(action_id)

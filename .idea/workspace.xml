@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c488df4-aaca-4f81-a234-220e49b165b4" name="Changes" comment="Added env">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="2c488df4-aaca-4f81-a234-220e49b165b4" name="Changes" comment="ReadMe">
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -142,7 +141,7 @@
       <workItem from="1672336314695" duration="4745000" />
       <workItem from="1672701374850" duration="96000" />
       <workItem from="1672701510576" duration="607000" />
-      <workItem from="1672856933400" duration="3588000" />
+      <workItem from="1672856933400" duration="3754000" />
     </task>
     <task id="LOCAL-00001" summary="Added README file">
       <created>1671399085829</created>
@@ -242,7 +241,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672859817347</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="ReadMe">
+      <created>1672860605569</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1672860605569</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -281,7 +287,8 @@
     <MESSAGE value="Removed Archive" />
     <MESSAGE value="Removed Archive, updated readme file" />
     <MESSAGE value="Added env" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added env" />
+    <MESSAGE value="ReadMe" />
+    <option name="LAST_COMMIT_MESSAGE" value="ReadMe" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

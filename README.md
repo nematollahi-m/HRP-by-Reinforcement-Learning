@@ -9,7 +9,23 @@ with Application to Sustainable Farming".
   * [Pre-trained Models](#pre-trianed-models)
   * [Aggregating](#aggregating)
 
-
+### About 
+Deep Reinforcement Learning (DRL) evolved from traditional Reinforcement Learning and Deep
+Learning techniques to solve complex sequential decision-making problems. Despite the significant advances
+in DRL, little attention has been paid to developing DRL algorithms to solve sequential multi-criteria decision
+(SMCD) problems, which usually involve conflicting and non-commensurable attributes. Drawing from these
+converging bodies of knowledge, we propose a Multi-Attribute Utility DRL (MAUDRL) algorithm to solve
+SMCD. We make three significant contributions. First, we contribute to the operational research field by
+integrating DRL and Multi-Criteria Decision Analysis (MCDA) methods to enable more effective decision
+support for solving SMCD problems with high dimensionality. Second, we contribute to explainable analytics
+and artificial intelligence (AI) by proposing a tractable and explainable MAUDRL model with multiple
+sources of reward that explicitly incorporates the preferences and risk attitudes of a decision-agent. Third,
+we contribute to the sustainability literature by applying MAUDRL to sustainable human resource planning
+in blueberry farming in British Columbia, Canada. We study different decision-making profiles representing
+farmers with varying sustainability preferences and risk attitudes. The numerical results demonstrate that
+MAUDRL solves complex SMCD problems and contributes to explainable analytics and AI. We also discuss
+the contribution of sustainable decision-making behaviour of the decision-agent on the quality of human
+resource planning policies in blueberry farming. We discuss the implications for theory and practice.
 ![alt text](img/1.png)
 
 ### Requirements
@@ -34,3 +50,9 @@ Based on the changes to the input parameters you may need to change the hyperpar
 The pre-trained models can be found in the model folder. 
 
 ## Aggregating
+
+
+For citation:
+```angular2html
+TO ADD
+```

@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c488df4-aaca-4f81-a234-220e49b165b4" name="Changes" comment="Added train code">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialObj.py" beforeDir="false" afterPath="$PROJECT_DIR$/SocialObj.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Train/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/Train/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp/Economic/best_model.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp/Economic/monitor.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp/Environmental/best_model.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp/Environmental/monitor.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp/Social/best_model.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp/Social/monitor.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp/mainecon/Economic/best_model.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp/mainecon/Economic/monitor.csv" beforeDir="false" />
-    </list>
+    <list default="true" id="2c488df4-aaca-4f81-a234-220e49b165b4" name="Changes" comment="Updated ReadMe" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -152,7 +139,7 @@
       <workItem from="1672336314695" duration="4745000" />
       <workItem from="1672701374850" duration="96000" />
       <workItem from="1672701510576" duration="607000" />
-      <workItem from="1672856933400" duration="1299000" />
+      <workItem from="1672856933400" duration="1617000" />
     </task>
     <task id="LOCAL-00001" summary="Added README file">
       <created>1671399085829</created>
@@ -224,7 +211,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672857479634</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Updated ReadMe">
+      <created>1672858427254</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1672858427255</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -259,7 +253,8 @@
     <MESSAGE value="Modified Social objective" />
     <MESSAGE value="Modified Parameters and added comments" />
     <MESSAGE value="Added train code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added train code" />
+    <MESSAGE value="Updated ReadMe" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated ReadMe" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

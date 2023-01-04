@@ -26,6 +26,7 @@ farmers with varying sustainability preferences and risk attitudes. The numerica
 MAUDRL solves complex SMCD problems and contributes to explainable analytics and AI. We also discuss
 the contribution of sustainable decision-making behaviour of the decision-agent on the quality of human
 resource planning policies in blueberry farming. We discuss the implications for theory and practice.
+
 ![alt text](img/1.png)
 
 ### Requirements

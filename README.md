@@ -1,8 +1,10 @@
 # MADRUL
-
+This repository contains code to replicate our research described in 
+"Multi-Attribute Utility Deep Reinforcement Learning
+with Application to Sustainable Farming". 
 ## Table of contents
 
-  * [Prerequisites](#prerequisites)
+  * [Requirements](#requirements)
   * [Training](#training)
   * [Pre-trained Models](#pre-trianed-models)
   * [Aggregating](#aggregating)
@@ -10,13 +12,13 @@
 
 ![alt text](img/1.png)
 
-### Prerequisites
+### Requirements
 
-* Numpy 
-* stable baselines3
-* Matplotlib
-* Pytorch
-* Gym
+* Numpy: `numpy` 
+* stable baselines 3: `stable-baselines3` 
+* Matplotlib" `matplotlib`
+* Pytorch: `torch`
+* Gym: `gym`
 
 ### Training
 To train the agent for each of the objectives, the `train.py` code in the train folder needs to be executed.

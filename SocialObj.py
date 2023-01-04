@@ -16,7 +16,9 @@ class SocialEnv(Env):
         self.plants = PLANTS
 
     def step(self, action):
-
+        """
+            Given the action, this function updates the environment (the state, remaining budget, and remaining unpruned plants)
+        """
         done = False
         info = {}
 
@@ -89,8 +91,8 @@ class SocialEnv(Env):
                 if c_t == 0:
                     r_t = -M
                 else:
-                    r_t = (m_b_t + m_i_t + m_a_t - max(0, -h_b_t) - max(0, -h_i_t) - max(0,
-                                                                                         -h_a_t)) / MAX_ALLOWED_WORKER + 1
+                    r_t = (m_b_t + m_i_t + m_a_t - max(0, -h_b_t) - max(0, -h_i_t) - max(0,-h_a_t)) / \
+                          MAX_ALLOWED_WORKER + 1
 
                 done = True
                 return self.state, r_t, done, info

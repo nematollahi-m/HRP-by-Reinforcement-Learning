@@ -1,5 +1,7 @@
 # MADRUL
 
+![alt text](img/1.png)
+
 ### Prerequisites
 
 * Numpy 
@@ -8,8 +10,14 @@
 * Pytorch
 * Gym
 
-## Training
-For training
+### Training
+To train the agent for each of the objectives, the `train.py` code in the train folder needs to be executed.
+You can set new paramerters for the model using the `Parameters.py` code, this includes the initial budgets, number of pruned plants, 
+farm size, etc. We strongly recommend not to change the reward constant as based on our experiments 10 is the best value for it.
+
+In addition, Hypereparametrs of the model can also be changed. Including the learning rate, number of training steps,
+
+
 
 ## Pre-trianed Models
 The pre-trained models can be found in the model folder. 

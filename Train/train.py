@@ -14,7 +14,7 @@ warnings.filterwarnings('ignore')
 
 
 class SaveOnBestTrainingRewardCallback(BaseCallback):
-    # This class is based on the code from: https://stable-baselines.readthedocs.io/en/master/guide/examples.html
+    # This class is based on the code: https://stable-baselines.readthedocs.io/en/master/guide/examples.html
 
     def __init__(self, check_freq: int, log_dir: str, verbose=1):
         super(SaveOnBestTrainingRewardCallback, self).__init__(verbose)

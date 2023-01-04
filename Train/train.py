@@ -6,9 +6,9 @@ from stable_baselines3.common.callbacks import BaseCallback
 from stable_baselines3.common.monitor import Monitor
 from stable_baselines3 import DQN
 from Parameters import *
-from EconomicObj import EconomicEnv
-from EnvironmentObj import EnvironmentEnv
-from SocialObj import SocialEnv
+from env.EconomicObj import EconomicEnv
+from env.EnvironmentObj import EnvironmentEnv
+from env.SocialObj import SocialEnv
 import warnings
 warnings.filterwarnings('ignore')
 

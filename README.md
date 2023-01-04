@@ -1,5 +1,13 @@
 # MADRUL
 
+## Table of contents
+
+  * [Prerequisites](#prerequisites)
+  * [Training](#training)
+  * [Pre-trained Models](#pre-trianed-models)
+  * [Aggregating](#aggregating)
+
+
 ![alt text](img/1.png)
 
 ### Prerequisites

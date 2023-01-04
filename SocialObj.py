@@ -7,11 +7,8 @@ from Parameters import *
 class SocialEnv(Env):
     def __init__(self):
         super().__init__()
-        # state = (number of hired workers_beg ,number of hired workers_med, number of hired workers_adv , remaining plants)
         self.state = np.array([0, 0, 0])
-        # self.action_space = Discrete(((MAX_ALLOWED_WORKER + 1) * (MAX_ALLOWED_WORKER + 1)) ** 3)
-        self.action_space = Discrete(((2 * MAX_ALLOWED_WORKER + 1)) ** 3)
-
+        self.action_space = Discrete((2 * MAX_ALLOWED_WORKER + 1) ** 3)
         self.observation_space = Box(low=np.array([0, 0, 0]), high=np.array(
             [MAX_ALLOWED_WORKER, MAX_ALLOWED_WORKER, MAX_ALLOWED_WORKER]))
         self.prune_len = PRUNE_LENGTH
@@ -81,7 +78,6 @@ class SocialEnv(Env):
             c_t = c_hire + c_fire + c_wage
 
             if c_t > self.budget:
-                #print('Pruned more than available but exceeded the budget')
                 r_t = -M
                 done = True
                 return self.state, r_t, done, info
@@ -89,7 +85,7 @@ class SocialEnv(Env):
                 self.state = np.asarray([m_b_t, m_i_t, m_a_t])
                 self.plants = 0
                 self.budget = self.budget - c_t
-                #print('SUCCESS **********************************************')
+                print('********************* Goal Achieved **************************')
                 if c_t == 0:
                     r_t = -M
                 else:
@@ -105,7 +101,6 @@ class SocialEnv(Env):
             return self.state, r_t, done, info
 
         if self.prune_len <= 1:
-            #print('End of the season')
             r_t = (m_b_t + m_i_t + m_a_t - max(0, -h_b_t) - max(0, -h_i_t) - max(0, -h_a_t)) / MAX_ALLOWED_WORKER
 
             self.state = np.asarray([m_b_t, m_i_t, m_a_t])

@@ -33,7 +33,7 @@ action_size = ((MAX_ALLOWED_WORKER + 1) * (MAX_ALLOWED_WORKER + 1)) ** 3
 
 # Reward constant
 M = 10
-# Utility function
+#Used for the Utility function
 rho = -3
 
 # Economic, Environmental, and Social Coefficients

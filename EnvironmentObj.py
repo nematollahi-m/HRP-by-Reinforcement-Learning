@@ -3,13 +3,13 @@ from gym.spaces import Discrete, Box
 import numpy as np
 from Parameters import *
 
+
 class EnvironmentEnv(Env):
     def __init__(self):
         super().__init__()
 
         self.state = np.array([0, 0, 0])
-        self.action_space = Discrete(((2 * MAX_ALLOWED_WORKER + 1)) ** 3)
-
+        self.action_space = Discrete((2 * MAX_ALLOWED_WORKER + 1) ** 3)
         self.observation_space = Box(low=np.array([0, 0, 0]), high=np.array(
             [MAX_ALLOWED_WORKER, MAX_ALLOWED_WORKER, MAX_ALLOWED_WORKER]))
         self.prune_len = PRUNE_LENGTH
@@ -18,6 +18,9 @@ class EnvironmentEnv(Env):
 
     def step(self, action):
 
+        """
+                   Given the action, this function updates the environment (the state, remaining budget, and remaining unpruned plants)
+        """
         done = False
         info = {}
 
@@ -86,13 +89,12 @@ class EnvironmentEnv(Env):
             ql_t = ql_t * p_t / pl_t
 
             if c_t > self.budget:
-                #print('Pruned more than available but exceeded the budget')
                 r_t = -M
                 done = True
                 return self.state, r_t, done, info
             else:
 
-                #print('SUCCESS **********************************************')
+                print('********************* Goal Achieved **************************')
                 if c_t == 0 or p_t == 0:
                     r_t = -M
                 else:
@@ -109,7 +111,6 @@ class EnvironmentEnv(Env):
             return self.state, r_t, done, info
 
         if self.prune_len <= 1:
-            #print('End of the season')
             if c_t == 0 or pl_t == 0:
                 r_t = -M
             else:
@@ -125,7 +126,6 @@ class EnvironmentEnv(Env):
             r_t = -M
         else:
             r_t = (ql_t) / (pl_t * QUALITY_ADV)
-            # r_t = -M
 
         self.state = np.asarray([m_b_t, m_i_t, m_a_t])
         self.prune_len -= 1

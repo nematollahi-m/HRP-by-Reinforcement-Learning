@@ -17,7 +17,9 @@ class EconomicEnv(Env):
         self.plants = PLANTS
 
     def step(self, action):
-
+        """
+            Given the action, this function updates the environment (the state, remaining budget, and remaining unpruned plants)
+        """
         done = False
         info = {}
 
@@ -38,7 +40,6 @@ class EconomicEnv(Env):
         h_b_t = new_action[0]
         h_i_t = new_action[1]
         h_a_t = new_action[2]
-
 
         availability_beg = round(np.random.normal(WORKER_AVAILABILITY_BEG, 3))
         availability_int = round(np.random.normal(WORKER_AVAILABILITY_INT, 2))
@@ -73,7 +74,6 @@ class EconomicEnv(Env):
         pl_t = pl_b_t + pl_i_t + pl_a_t
 
         if pl_t >= p_t:
-
             c_hire = HIRE_COST * (max(0, h_b_t) + max(0, h_i_t) + max(0, h_a_t))
             c_fire = FIRE_COST * (max(0, -h_b_t) + max(0, -h_i_t) + max(0, -h_a_t))
             c_wage = ((WAGE_BEG * m_b_t) + (WAGE_INT * m_i_t) + (WAGE_ADV * m_a_t)) * (p_t / pl_t)
@@ -92,7 +92,7 @@ class EconomicEnv(Env):
                     r_t = -M
                 else:
                     r_t = p_t / c_t + M * M
-                print('***********************************************')
+                print('********************* Goal Achieved **************************')
 
                 done = True
                 return self.state, r_t, done, info

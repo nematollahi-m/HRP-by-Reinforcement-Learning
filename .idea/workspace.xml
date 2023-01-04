@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="2c488df4-aaca-4f81-a234-220e49b165b4" name="Changes" comment="Added train code">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EconomicObj.py" beforeDir="false" afterPath="$PROJECT_DIR$/EconomicObj.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EnvironmentObj.py" beforeDir="false" afterPath="$PROJECT_DIR$/EnvironmentObj.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/Parameters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/economic_model.zip" beforeDir="false" afterPath="$PROJECT_DIR$/model/economic_model.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/economic_model_replay_buffer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model/economic_model_replay_buffer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/economic_policy" beforeDir="false" afterPath="$PROJECT_DIR$/model/economic_policy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialObj.py" beforeDir="false" afterPath="$PROJECT_DIR$/SocialObj.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,8 +41,11 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/nafiseh/Documents/GitHub/HRP-by-Reinforcement-Learning&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
@@ -116,6 +120,8 @@
       <workItem from="1672336036678" duration="261000" />
       <workItem from="1672336314695" duration="4745000" />
       <workItem from="1672701374850" duration="96000" />
+      <workItem from="1672701510576" duration="607000" />
+      <workItem from="1672856933400" duration="492000" />
     </task>
     <task id="LOCAL-00001" summary="Added README file">
       <created>1671399085829</created>

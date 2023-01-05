@@ -4,16 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c488df4-aaca-4f81-a234-220e49b165b4" name="Changes" comment="modified saveFunctions">
-      <change afterPath="$PROJECT_DIR$/src/aggregation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/plot_results.py" afterDir="false" />
+    <list default="true" id="2c488df4-aaca-4f81-a234-220e49b165b4" name="Changes" comment="main">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parameters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/action.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/action.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/train/tmp/Economic/best_model.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/train/tmp/Economic/monitor.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/train/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/train/train.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,7 +193,7 @@
       <workItem from="1672856933400" duration="4078000" />
       <workItem from="1672861023763" duration="4000" />
       <workItem from="1672861030821" duration="2180000" />
-      <workItem from="1672892678729" duration="3567000" />
+      <workItem from="1672892678729" duration="4601000" />
     </task>
     <task id="LOCAL-00001" summary="Added README file">
       <created>1671399085829</created>
@@ -326,7 +321,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672866617172</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="main">
+      <created>1672962035771</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1672962035771</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -368,7 +370,8 @@
     <MESSAGE value="ReadMe" />
     <MESSAGE value="created src" />
     <MESSAGE value="modified saveFunctions" />
-    <option name="LAST_COMMIT_MESSAGE" value="modified saveFunctions" />
+    <MESSAGE value="main" />
+    <option name="LAST_COMMIT_MESSAGE" value="main" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -378,13 +381,18 @@
           <line>46</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/main.py</url>
+          <line>123</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$aggregation.coverage" NAME="aggregation Coverage Results" MODIFIED="1672946988348" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$plot_results.coverage" NAME="plot_results Coverage Results" MODIFIED="1672961489053" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1672961869770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1672962959633" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$train__1_.coverage" NAME="train (1) Coverage Results" MODIFIED="1672859715118" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Train" />
     <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$pathlib.coverage" NAME="pathlib Coverage Results" MODIFIED="1672946506466" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9" />
     <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$train.coverage" NAME="train Coverage Results" MODIFIED="1672349647456" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

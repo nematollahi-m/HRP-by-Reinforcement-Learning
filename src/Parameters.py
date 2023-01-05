@@ -37,8 +37,8 @@ M = 10
 rho = -3
 
 # Economic, Environmental, and Social Coefficients
-lambda_econ = 1.0
-lambda_env = 0.0
+lambda_econ = 0.0
+lambda_env = 1.0
 lambda_social = 0.0
 
 # number of training time steps

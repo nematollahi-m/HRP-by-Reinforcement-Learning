@@ -1,4 +1,3 @@
-import numpy as np
 from stable_baselines3 import DQN
 from src.env.EconomicObj import EconomicEnv
 from src.env.EnvironmentObj import EnvironmentEnv
@@ -9,8 +8,8 @@ from saveFunctions import *
 import math
 import torch as th
 import warnings
-warnings.filterwarnings('ignore')
 
+warnings.filterwarnings('ignore')
 
 '''
     Before running this code make sure three environments are trained and saved in model folder. 
@@ -27,6 +26,7 @@ def calculate_constants(rho1, x_best, x_worst):
     n_x = float(1 / m_x_2)
     return m_x, n_x
 
+
 def calculate_utility(rho1, m_x, n_x, q_value):
     if rho1 == 0:
         u_a = q_value
@@ -34,8 +34,8 @@ def calculate_utility(rho1, m_x, n_x, q_value):
     u_a = float(m_x - (n_x * (math.exp((-q_value * rho1)))))
     return u_a
 
-def choose_action(obs_econ, econ_model, obs_env, env_model, obs_social, social_model,device):
 
+def choose_action(obs_econ, econ_model, obs_env, env_model, obs_social, social_model, device):
     observation_econ = obs_econ.reshape((-1,) + econ_model.observation_space.shape)
     observation_econ = obs_as_tensor(observation_econ, device=device)
 
@@ -92,7 +92,6 @@ def choose_action(obs_econ, econ_model, obs_env, env_model, obs_social, social_m
 
 
 def main():
-
     if th.cuda.is_available():
         print('GPU is available')
         device = 'cuda'
@@ -128,42 +127,55 @@ def main():
         mapping = tuple \
             (np.ndindex(((2 * MAX_ALLOWED_WORKER) + 1, (2 * MAX_ALLOWED_WORKER) + 1, (2 * MAX_ALLOWED_WORKER) + 1)))
         new_action = mapping[action_id]
-        print(new_action)
 
-        action_econ, _ = econ_model.predict(obs_econ, deterministic=True)
-        action_econ_unroll = mapping[action_econ]
-        print("Stable baseline prediction econ:", action_econ_unroll)
-        action_env, _ = env_model.predict(obs_econ, deterministic=True)
-        action_env_unroll = mapping[action_env]
-        print("Stable baseline prediction env:", action_env_unroll)
-        action_social, _ = social_model.predict(obs_social, deterministic=True)
-        action_social_unroll = mapping[action_social]
-        print("Stable baseline prediction social:", action_social_unroll)
+        if lambda_econ == 1:
+            action_econ, _ = econ_model.predict(obs_econ, deterministic=True)
+            action_econ_unroll = mapping[action_econ]
+            print("Selected Action Econ:", action_econ_unroll)
+            obs_econ, reward_econ, done_econ, info = econ_env.step(action_id)
+            track_reward_econ = np.append(track_reward_econ, reward_econ)
+            print('State', obs_econ, 'Economic Reward= ', reward_econ)
+            print('******************************************************')
+            if done_econ is True:
+                remaining_b1 = round(econ_env.budget, 3)
+                print('Remaining Budget = ', str(remaining_b1) + '/' + str(BUDGET), 'Un-pruned Plants = ',
+                      str(econ_env.plants) + '/' + str(PLANTS))
+                break
 
-        np.random.seed(step + 110)
-        obs_econ, reward_econ, done_econ, info = econ_env.step(action_id)
-        track_reward_econ = np.append(track_reward_econ, reward_econ)
-        np.random.seed(step + 110)
-        obs_env, reward_env, done_env, info = env_env.step(action_id)
-        track_reward_env = np.append(track_reward_env, reward_env)
-        np.random.seed(step + 110)
-        obs_social, reward_social, done_social, info = social_env.step(action_id)
-        track_reward_social = np.append(track_reward_social, reward_social)
+        elif lambda_env == 1:
+            action_env, _ = env_model.predict(obs_econ, deterministic=True)
+            action_env_unroll = mapping[action_env]
+            print("Stable baseline prediction env:", action_env_unroll)
+            obs_env, reward_env, done_env, info = env_env.step(action_id)
+            track_reward_env = np.append(track_reward_env, reward_env)
+            print('State', obs_env, 'Environmental Reward= ', reward_env)
+            print('******************************************************')
+            if done_env is True:
+                remaining_b1 = round(env_env.budget, 3)
+                print('Remaining Budget = ', str(remaining_b1) + '/' + str(BUDGET), 'Un-pruned Plants = ',
+                      str(env_env.plants) + '/' + str(PLANTS))
+                break
 
-        print('State= ', obs_econ)
-        print('Economic Reward= ', reward_econ)
-        print('Environmental Reward= ', reward_env)
-        print('Social Reward= ', reward_social)
-        print('******************************************************')
-
-        if done_econ is True:
-            remining_b1 = round(social_env.budget, 3)
-            print('Remaining Budget = ', str(remining_b1) + '/' + str(BUDGET), 'Un-pruned Plants = ',
-                  str(social_env.plants) + '/' + str(PLANTS))
+        elif lambda_social == 1:
+            action_social, _ = social_model.predict(obs_social, deterministic=True)
+            action_social_unroll = mapping[action_social]
+            print("Stable baseline prediction social:", action_social_unroll)
+            obs_social, reward_social, done_social, info = social_env.step(action_id)
+            track_reward_social = np.append(track_reward_social, reward_social)
+            print('State', obs_social, 'Social Reward= ', reward_social)
+            print('******************************************************')
+            if done_social is True:
+                remaining_b1 = round(social_env.budget, 3)
+                print('Remaining Budget = ', str(remaining_b1) + '/' + str(BUDGET), 'Un-pruned Plants = ',
+                      str(social_env.plants) + '/' + str(PLANTS))
+        else:
+            print('For aggregated environments use the aggregated.py code')
             break
+
+        # np.random.seed(step + 110)
 
     print('done')
 
+
 if __name__ == '__main__':
     main()
-

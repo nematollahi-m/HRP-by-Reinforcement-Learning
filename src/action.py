@@ -5,6 +5,7 @@ from Parameters import *
 import math
 import time
 
+
 def calculate_constants(rho1, x_best, x_worst):
     if rho1 == 0:
         m_x = 0
@@ -16,6 +17,7 @@ def calculate_constants(rho1, x_best, x_worst):
     n_x = float(1 / m_x_2)
     return m_x, n_x
 
+
 def calculate_utility(rho1, m_x, n_x, q_value):
     if rho1 == 0:
         u_a = q_value
@@ -23,8 +25,8 @@ def calculate_utility(rho1, m_x, n_x, q_value):
     u_a = float(m_x - (n_x * (math.exp((-q_value * rho1)))))
     return u_a
 
-def choose_action(obs_econ, econ_model, obs_env, env_model, obs_social, social_model, device, k):
 
+def choose_action(obs_econ, econ_model, obs_env, env_model, obs_social, social_model, device, k):
     st = time.time()
 
     observation_econ = obs_econ.reshape((-1,) + econ_model.observation_space.shape)
@@ -41,12 +43,10 @@ def choose_action(obs_econ, econ_model, obs_env, env_model, obs_social, social_m
         q_value_env = env_model.q_net(observation_env)
         q_value_social = social_model.q_net(observation_social)
 
-
     q_value_econ_np = q_value_econ.numpy()
     best_econ = np.max(q_value_econ_np)
     worst_econ = np.min(q_value_econ_np)
 
-    ################################ test
     q_value_econ_np = (q_value_econ - worst_econ) / (best_econ - worst_econ)
     best_econ = np.max(q_value_econ_np.numpy())
     worst_econ = np.min(q_value_econ_np.numpy())
@@ -54,20 +54,16 @@ def choose_action(obs_econ, econ_model, obs_env, env_model, obs_social, social_m
     q_value_env_np = q_value_env.numpy()
     best_env = np.max(q_value_env_np)
     worst_env = np.min(q_value_env_np)
-    ################################ test
     q_value_env_np = (q_value_env_np - worst_env) / (best_env - worst_env)
     best_env = np.max(q_value_env_np)
     worst_env = np.min(q_value_env_np)
-    #print(q_value_env_np)
 
     q_value_social_np = q_value_social.numpy()
     best_social = np.max(q_value_social_np)
     worst_social = np.min(q_value_social_np)
-    ################################ test
     q_value_social_np = (q_value_social_np - worst_social) / (best_social - worst_social)
     best_social = np.max(q_value_social_np)
     worst_social = np.min(q_value_social_np)
-    #print(q_value_social_np)
 
     con_econ_m, con_econ_n = calculate_constants(rho, best_econ, worst_econ)
     con_env_m, con_env_n = calculate_constants(rho, best_env, worst_env)
@@ -91,6 +87,5 @@ def choose_action(obs_econ, econ_model, obs_env, env_model, obs_social, social_m
 
     et = time.time()
 
-    print('MAUT time', (et-st))
-    # return [new_actions_id, new_actions_value]
+    print('MAUT time', (et - st))
     return [sorted_id, sorted_value]

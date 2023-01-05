@@ -43,12 +43,12 @@ You can set new paramerters for the model using the `Parameters.py` code, this i
 farm size, etc. We strongly recommend not to change the reward constant as based on our experiments 10 is the best value for it.
 
 In addition, Hypereparametrs of the model can also be changed. This includes the learning rate, number of training steps, and exploration rate.
-Based on the changes to the input parameters you may need to change the hyperparameters to achive the best 
-
+Based on the changes to the input parameters you may need to change the hyperparameters to achieve the best performance.
 
 
 ## Pre-trianed Models
-The pre-trained models can be found in the model folder. 
+Instead of training, you can directly use the pre-trained models. All three trained models can be found in
+the model folder.
 
 ## Aggregating
 

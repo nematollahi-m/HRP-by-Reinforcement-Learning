@@ -7,6 +7,7 @@ from Parameters import *
 from stable_baselines3.common.utils import obs_as_tensor
 from saveFunctions import *
 import math
+import torch as th
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -33,7 +34,7 @@ def calculate_utility(rho1, m_x, n_x, q_value):
     u_a = float(m_x - (n_x * (math.exp((-q_value * rho1)))))
     return u_a
 
-def choose_action(obs_econ, econ_model, obs_env, env_model, obs_social, social_model):
+def choose_action(obs_econ, econ_model, obs_env, env_model, obs_social, social_model,device):
 
     observation_econ = obs_econ.reshape((-1,) + econ_model.observation_space.shape)
     observation_econ = obs_as_tensor(observation_econ, device=device)
@@ -92,29 +93,17 @@ def choose_action(obs_econ, econ_model, obs_env, env_model, obs_social, social_m
 
 def main():
 
-    # # plotting the results of training three objectives:
-    # log_dir_econ = "tmp/Economic/"
-    # log_dir_env = "tmp/Environmental/"
-    # log_dir_social = "tmp/Social/"
-    # x_econ, y_econ = plot_results_test(log_dir_econ)
-    # x_env, y_env = plot_results_test(log_dir_env)
-    # x_social, y_social = plot_results_test(log_dir_social)
-    #
-    # title = 'Learning Curve'
-    # fig = plt.figure(title)
-    # plt.plot(x_econ, y_econ, 'r')
-    # plt.plot(x_env, y_env, 'b')
-    # plt.plot(x_social, y_social, 'g')
-    # plt.xlabel('Number of Timesteps')
-    # plt.ylabel('Rewards')
-    # plt.title(title)
-    # plt.legend(["Econ","Env","Soc"])
-    # plt.show()
+    if th.cuda.is_available():
+        print('GPU is available')
+        device = 'cuda'
+    else:
+        print('No GPU')
+        device = 'cpu'
 
     # loading trained models
-    econ_model = DQN.load("model/economic_model")
-    env_model = DQN.load("model/environmental_model")
-    social_model = DQN.load("model/social_model")
+    econ_model = DQN.load("../model/economic_model")
+    env_model = DQN.load("../model/environmental_model")
+    social_model = DQN.load("../model/social_model")
 
     econ_env = EconomicEnv()
     env_env = EnvironmentEnv()
@@ -133,7 +122,7 @@ def main():
 
     for step in range(n_steps):
 
-        action_id = choose_action(obs_econ, econ_model, obs_env, env_model, obs_social, social_model)
+        action_id = choose_action(obs_econ, econ_model, obs_env, env_model, obs_social, social_model, device)
         print("Step {}".format(step + 1))
 
         mapping = tuple \
@@ -161,11 +150,10 @@ def main():
         obs_social, reward_social, done_social, info = social_env.step(action_id)
         track_reward_social = np.append(track_reward_social, reward_social)
 
-        print('Economic State= ', obs_econ, 'Economic Reward= ', reward_econ)
-
-        print('Environment State= ', obs_env, 'Environmental Reward= ', reward_env)
-
-        print('Social State= ', obs_social, 'Social Reward= ', reward_social)
+        print('State= ', obs_econ)
+        print('Economic Reward= ', reward_econ)
+        print('Environmental Reward= ', reward_env)
+        print('Social Reward= ', reward_social)
         print('******************************************************')
 
         if done_econ is True:

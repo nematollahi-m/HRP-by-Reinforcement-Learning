@@ -64,7 +64,7 @@ else:
 """
 print('********* Training Economic *********')
 economic_env = EconomicEnv()
-log_dir = "tmp/Economic/"
+log_dir = "../../tmp/Economic/"
 os.makedirs(log_dir, exist_ok=True)
 
 economic_env = Monitor(economic_env, log_dir)
@@ -78,16 +78,16 @@ print('********* Done with training Economic *********')
 # saving the model
 print('********* Saving the economic model *********')
 
-economic_model.save("model/economic_model")
-loaded_economic_model = DQN.load("model/economic_model")
+economic_model.save("../../model/economic_model")
+loaded_economic_model = DQN.load("../../model/economic_model")
 print(f"The loaded_model has {loaded_economic_model.replay_buffer.size()} transitions in its buffer")
 
-economic_model.save_replay_buffer("model/economic_model_replay_buffer")
-loaded_economic_model.load_replay_buffer("model/economic_model_replay_buffer")
+economic_model.save_replay_buffer("../../model/economic_model_replay_buffer")
+loaded_economic_model.load_replay_buffer("../../model/economic_model_replay_buffer")
 print(f"The loaded_model has {loaded_economic_model.replay_buffer.size()} transitions in its buffer")
 
 economic_policy = economic_model.policy
-economic_policy.save("model/economic_policy")
+economic_policy.save("../../model/economic_policy")
 
 
 """
@@ -95,7 +95,7 @@ economic_policy.save("model/economic_policy")
 """
 print('********* Training Environment *********')
 environmnet_env = EnvironmentEnv()
-log_dir = "tmp/Environmental/"
+log_dir = "../../tmp/Environmental/"
 os.makedirs(log_dir, exist_ok=True)
 environmnet_env = Monitor(environmnet_env, log_dir)
 callback = SaveOnBestTrainingRewardCallback(check_freq=1000, log_dir=log_dir)
@@ -106,22 +106,22 @@ print('********* Done with training Environment *********')
 
 # saving the model
 print('********* Saving the environment model *********')
-environmnet_model.save("model/environmental_model")
-loaded_environmnet_model = DQN.load("model/environmental_model")
+environmnet_model.save("../../model/environmental_model")
+loaded_environmnet_model = DQN.load("../../model/environmental_model")
 print(f"The loaded_model has {loaded_environmnet_model.replay_buffer.size()} transitions in its buffer")
 
-environmnet_model.save_replay_buffer("model/environmental_model_replay_buffer")
-loaded_environmnet_model.load_replay_buffer("model/environmental_model_replay_buffer")
+environmnet_model.save_replay_buffer("../../model/environmental_model_replay_buffer")
+loaded_environmnet_model.load_replay_buffer("../../model/environmental_model_replay_buffer")
 print(f"The loaded_model has {loaded_environmnet_model.replay_buffer.size()} transitions in its buffer")
 
 environmnet_policy = environmnet_model.policy
-environmnet_policy.save("model/environmental_policy")
+environmnet_policy.save("../../model/environmental_policy")
 
 """
     Training Social Agent - saving the model
 """
 social_env = SocialEnv()
-log_dir = "tmp/Social/"
+log_dir = "../../tmp/Social/"
 os.makedirs(log_dir, exist_ok=True)
 social_env = Monitor(social_env, log_dir)
 callback = SaveOnBestTrainingRewardCallback(check_freq=1000, log_dir=log_dir)
@@ -129,16 +129,16 @@ social_model = DQN('MlpPolicy', social_env, learning_rate=0.0001, exploration_fr
                      exploration_initial_eps=1.0, verbose=1, device=device, tensorboard_log="./dqn_social/")
 social_model.learn(total_timesteps=time_steps, callback=callback)
 
-social_model.save("model/social_model")
-loaded_social_model = DQN.load("model/social_model")
+social_model.save("../../model/social_model")
+loaded_social_model = DQN.load("../../model/social_model")
 print(f"The loaded_model has {loaded_social_model.replay_buffer.size()} transitions in its buffer")
 
-social_model.save_replay_buffer("model/social_model_replay_buffer")
-loaded_social_model.load_replay_buffer("model/social_model_replay_buffer")
+social_model.save_replay_buffer("../../model/social_model_replay_buffer")
+loaded_social_model.load_replay_buffer("../../model/social_model_replay_buffer")
 print(f"The loaded_model has {loaded_social_model.replay_buffer.size()} transitions in its buffer")
 
 social_policy = social_model.policy
-social_policy.save("model/social_policy")
+social_policy.save("../../model/social_policy")
 
 
 

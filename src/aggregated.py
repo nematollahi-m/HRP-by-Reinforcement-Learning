@@ -41,14 +41,14 @@ def get_parent(new_tree, nd):
 def get_current_state(action_path):
     # getting new status of the environment
     if len(action_path) == 0:
-        tmp_env_econ = EnvironmentEnv()
+        tmp_env_econ = EconomicEnv()
         tmp_env_env = EnvironmentEnv()
         tmp_env_social = SocialEnv()
         obs_new = [0, 0, 0]
         done_new = False
         return tmp_env_econ, tmp_env_env, tmp_env_social, obs_new, done_new
 
-    tmp_env_econ = EnvironmentEnv()
+    tmp_env_econ = EconomicEnv()
     tmp_env_env = EnvironmentEnv()
     tmp_env_social = SocialEnv()
     obs_new = tmp_env_econ.reset()

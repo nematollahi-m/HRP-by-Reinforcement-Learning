@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c488df4-aaca-4f81-a234-220e49b165b4" name="Changes" comment="main">
+    <list default="true" id="2c488df4-aaca-4f81-a234-220e49b165b4" name="Changes" comment="added aggregated.py">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parameters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/action.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/action.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/aggregated.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/aggregated.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aggregation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/env/EconomicObj.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/env/EconomicObj.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/env/EnvironmentObj.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/env/EnvironmentObj.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/env/SocialObj.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/env/SocialObj.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/plot_results.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +22,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/venv/lib/python3.9/site-packages/numpy/lib/index_tricks.py" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -198,7 +194,8 @@
       <workItem from="1672856933400" duration="4078000" />
       <workItem from="1672861023763" duration="4000" />
       <workItem from="1672861030821" duration="2180000" />
-      <workItem from="1672892678729" duration="7959000" />
+      <workItem from="1672892678729" duration="8045000" />
+      <workItem from="1673034628465" duration="763000" />
     </task>
     <task id="LOCAL-00001" summary="Added README file">
       <created>1671399085829</created>
@@ -340,7 +337,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672963043266</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="added aggregated.py">
+      <created>1673034544084</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1673034544084</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -383,7 +387,8 @@
     <MESSAGE value="created src" />
     <MESSAGE value="modified saveFunctions" />
     <MESSAGE value="main" />
-    <option name="LAST_COMMIT_MESSAGE" value="main" />
+    <MESSAGE value="added aggregated.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="added aggregated.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -411,6 +416,6 @@
     <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$main.coverage" NAME="main Coverage Results" MODIFIED="1672355036294" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$EnvironmentObj.coverage" NAME="EnvironmentObj Coverage Results" MODIFIED="1671557867787" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$train__2_.coverage" NAME="train (2) Coverage Results" MODIFIED="1672961783201" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/train" />
-    <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$aggregated.coverage" NAME="aggregated Coverage Results" MODIFIED="1673034249343" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$aggregated.coverage" NAME="aggregated Coverage Results" MODIFIED="1673034794300" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>

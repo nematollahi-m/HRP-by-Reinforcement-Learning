@@ -92,7 +92,6 @@ class EconomicEnv(Env):
                     r_t = -M
                 else:
                     r_t = p_t / c_t + M * M
-                print('********************* Goal Achieved **************************')
 
                 done = True
                 return self.state, r_t, done, info

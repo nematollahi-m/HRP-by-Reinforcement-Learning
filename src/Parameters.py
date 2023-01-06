@@ -33,13 +33,16 @@ action_size = ((MAX_ALLOWED_WORKER + 1) * (MAX_ALLOWED_WORKER + 1)) ** 3
 
 # Reward constant
 M = 10
+
 #Used for the Utility function
 rho = -3
 
 # Economic, Environmental, and Social Coefficients
-lambda_econ = 0.0
-lambda_env = 1.0
-lambda_social = 0.0
+lambda_econ = 0.25
+lambda_env = 0.25
+lambda_social = 0.5
 
 # number of training time steps
 time_steps = 400000
+
+beam_size = 4

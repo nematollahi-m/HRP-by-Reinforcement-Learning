@@ -87,7 +87,6 @@ class SocialEnv(Env):
                 self.state = np.asarray([m_b_t, m_i_t, m_a_t])
                 self.plants = 0
                 self.budget = self.budget - c_t
-                print('********************* Goal Achieved **************************')
                 if c_t == 0:
                     r_t = -M
                 else:

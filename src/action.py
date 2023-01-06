@@ -86,6 +86,4 @@ def choose_action(obs_econ, econ_model, obs_env, env_model, obs_social, social_m
     new_actions_value = sorted_value[0:k]
 
     et = time.time()
-
-    print('MAUT time', (et - st))
     return [sorted_id, sorted_value]

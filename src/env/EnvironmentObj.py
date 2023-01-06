@@ -93,8 +93,6 @@ class EnvironmentEnv(Env):
                 done = True
                 return self.state, r_t, done, info
             else:
-
-                print('********************* Goal Achieved **************************')
                 if c_t == 0 or p_t == 0:
                     r_t = -M
                 else:

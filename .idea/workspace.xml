@@ -195,7 +195,7 @@
       <workItem from="1672861023763" duration="4000" />
       <workItem from="1672861030821" duration="2180000" />
       <workItem from="1672892678729" duration="8045000" />
-      <workItem from="1673034628465" duration="763000" />
+      <workItem from="1673034628465" duration="1943000" />
     </task>
     <task id="LOCAL-00001" summary="Added README file">
       <created>1671399085829</created>
@@ -344,7 +344,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673034544084</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="added aggregated.py">
+      <created>1673040698951</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1673040698951</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -400,7 +407,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/aggregated.py</url>
-          <line>231</line>
+          <line>234</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
@@ -416,6 +423,6 @@
     <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$main.coverage" NAME="main Coverage Results" MODIFIED="1672355036294" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$EnvironmentObj.coverage" NAME="EnvironmentObj Coverage Results" MODIFIED="1671557867787" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$train__2_.coverage" NAME="train (2) Coverage Results" MODIFIED="1672961783201" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/train" />
-    <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$aggregated.coverage" NAME="aggregated Coverage Results" MODIFIED="1673034794300" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$aggregated.coverage" NAME="aggregated Coverage Results" MODIFIED="1673041491035" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>

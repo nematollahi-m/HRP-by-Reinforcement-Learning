@@ -9,6 +9,7 @@ from treelib import Tree
 import time
 import torch as th
 import warnings
+from tqdm import tqdm
 
 warnings.filterwarnings('ignore')
 
@@ -132,10 +133,11 @@ def remove_nodes(total_idx, total_values, track_identifier, k, new_tree):
 
 def test_chosen_path(econ_env, env_env, social_env, in_path):
 
-    print('Testing chosen path')
     total_reward_econ = []
     total_reward_env = []
     total_reward_social = []
+    mapping = tuple \
+        (np.ndindex(((2 * MAX_ALLOWED_WORKER) + 1, (2 * MAX_ALLOWED_WORKER) + 1, (2 * MAX_ALLOWED_WORKER) + 1)))
 
     for i in range(len(in_path)):
 
@@ -150,23 +152,25 @@ def test_chosen_path(econ_env, env_env, social_env, in_path):
 
         obs_social, reward_social, done_social, info = social_env.step(a_i)
         total_reward_social = np.append(total_reward_social, reward_social)
+        map_a_i = mapping[a_i]
+        print('Action:',  map_a_i, 'Current State= ', obs_econ)
 
-        print('Current State= ', obs_econ)
-        print('Action=', a_i)
         if done_econ is True:
             remaining_b1 = round(social_env.budget, 3)
             print('Remaining Budget = ', str(remaining_b1) + '/' + str(BUDGET), 'Un-pruned Plants = ',
                   str(social_env.plants) + '/' + str(PLANTS))
             break
 
+    remaining_b1 = round(social_env.budget, 3)
+    print('Remaining Budget = ', str(remaining_b1) + '/' + str(BUDGET), 'Un-pruned Plants = ',
+          str(social_env.plants) + '/' + str(PLANTS))
+
 
 def main():
 
     if th.cuda.is_available():
-        print('GPU is available')
         device = 'cuda'
     else:
-        print('No GPU')
         device = 'cpu'
 
     # loading trained models
@@ -195,7 +199,6 @@ def main():
     new_tree = Tree()
     new_tree.create_node(0, 1)
     last_added_identifier = 1
-    new_tree.show()
     c = 2
     added = 0
     start_id = 0
@@ -213,7 +216,6 @@ def main():
             c += 1
         start_id += 1
 
-    new_tree.show()
 
     start_point = 1
     parent_id = np.zeros(k)
@@ -227,12 +229,12 @@ def main():
     for ll in range(k):
         new_c[ll] = 2 + ll
 
-    for t in range(PRUNE_LENGTH):
+    for t in tqdm(range(PRUNE_LENGTH)):
+
 
         new_tree, new_c, c, total_values, total_index, track_identifier = expand_nodes(new_c, k, new_tree, econ_model,
                                                                                        env_model, social_model, c,
                                                                                        parent_id, device)
-        new_tree.show()
         parent_id_tracker = []
 
         for o in range(k ** 2):
@@ -250,10 +252,13 @@ def main():
 
         new_c = tmp_new_c
         parent_id = tmp_new_c
-        new_tree.show()
     et = time.time()
-    print('beam search time', et - st)
+    print('********************** Final Tree **********************')
+    new_tree.show()
+
+    print('Total beam search time', (et - st)/60, 'min.')
     for h in range(k):
+        print('Policy number: ', h+1)
         current_path = get_action_path(new_tree, new_c[h])
         current_path = np.flip(current_path)
         econ_env = EconomicEnv()

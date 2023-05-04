@@ -1,4 +1,4 @@
-# MADRUL
+# MAUDRL
 This repository contains code to replicate our research described in 
 "Multi-Attribute Utility Deep Reinforcement Learning
 with Application to Sustainable Farming". 

@@ -1,4 +1,4 @@
-# MADRUL
+# MAUDRL
 This repository contains code to replicate our research described in 
 "Multi-Attribute Utility Deep Reinforcement Learning
 with Application to Sustainable Farming". 
@@ -46,7 +46,7 @@ In addition, Hypereparametrs of the model can also be changed. This includes the
 Based on the changes to the input parameters you may need to change the hyperparameters to achieve the best performance.
 
 
-## Pre-trianed Models
+## Pre-trained Models
 Instead of training, you can directly use the pre-trained models. All three trained models can be found in
 the model folder.
 

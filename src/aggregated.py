@@ -132,12 +132,11 @@ def remove_nodes(total_idx, total_values, track_identifier, k, new_tree):
 
 
 def test_chosen_path(econ_env, env_env, social_env, in_path):
-
     total_reward_econ = []
     total_reward_env = []
     total_reward_social = []
-    mapping = tuple \
-        (np.ndindex(((2 * MAX_ALLOWED_WORKER) + 1, (2 * MAX_ALLOWED_WORKER) + 1, (2 * MAX_ALLOWED_WORKER) + 1)))
+    mapping = tuple(np.ndindex(((2 * MAX_ALLOWED_WORKER) + 1, (2 * MAX_ALLOWED_WORKER) + 1,
+                                (2 * MAX_ALLOWED_WORKER) + 1)))
 
     for i in range(len(in_path)):
 
@@ -153,7 +152,7 @@ def test_chosen_path(econ_env, env_env, social_env, in_path):
         obs_social, reward_social, done_social, info = social_env.step(a_i)
         total_reward_social = np.append(total_reward_social, reward_social)
         map_a_i = mapping[a_i]
-        print('Action:',  map_a_i, 'Current State= ', obs_econ)
+        print('Action:', map_a_i, 'Current State= ', obs_econ)
 
         if done_econ is True:
             remaining_b1 = round(social_env.budget, 3)
@@ -161,13 +160,14 @@ def test_chosen_path(econ_env, env_env, social_env, in_path):
                   str(social_env.plants) + '/' + str(PLANTS))
             break
 
-    remaining_b1 = round(social_env.budget, 3)
-    print('Remaining Budget = ', str(remaining_b1) + '/' + str(BUDGET), 'Un-pruned Plants = ',
-          str(social_env.plants) + '/' + str(PLANTS))
+    if done_econ is False:
+        remaining_b1 = round(social_env.budget, 3)
+        print('Remaining Budget = ', str(remaining_b1) + '/' + str(BUDGET), 'Un-pruned Plants = ',
+              str(social_env.plants) + '/' + str(PLANTS))
+    return done_econ
 
 
 def main():
-
     if th.cuda.is_available():
         device = 'cuda'
     else:
@@ -216,7 +216,6 @@ def main():
             c += 1
         start_id += 1
 
-
     start_point = 1
     parent_id = np.zeros(k)
     for i in range(k):
@@ -230,7 +229,6 @@ def main():
         new_c[ll] = 2 + ll
 
     for t in tqdm(range(PRUNE_LENGTH)):
-
 
         new_tree, new_c, c, total_values, total_index, track_identifier = expand_nodes(new_c, k, new_tree, econ_model,
                                                                                        env_model, social_model, c,
@@ -256,16 +254,20 @@ def main():
     print('********************** Final Tree **********************')
     new_tree.show()
 
-    print('Total beam search time', (et - st)/60, 'min.')
+    print('Total beam search time', (et - st) / 60, 'min.')
+    num_suc = 0
     for h in range(k):
-        print('Policy number: ', h+1)
+        print('Policy number: ', h + 1)
         current_path = get_action_path(new_tree, new_c[h])
         current_path = np.flip(current_path)
         econ_env = EconomicEnv()
         env_env = EnvironmentEnv()
         social_env = SocialEnv()
-        test_chosen_path(econ_env, env_env, social_env, current_path)
+        d = test_chosen_path(econ_env, env_env, social_env, current_path)
+        if d is True:
+            num_suc += 1
         print('***************************************')
+    print('success rate: ', num_suc, '/', beam_size)
 
 
 if __name__ == '__main__':

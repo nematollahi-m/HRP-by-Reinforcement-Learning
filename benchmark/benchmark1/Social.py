@@ -1,8 +1,7 @@
 from gym import Env
 from gym.spaces import Discrete, Box
 import numpy as np
-from src.Parameters import *
-
+from Parameters import *
 
 class SocialEnv(Env):
     def __init__(self):

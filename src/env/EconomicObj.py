@@ -15,6 +15,12 @@ class EconomicEnv(Env):
         self.prune_len = PRUNE_LENGTH
         self.budget = BUDGET
         self.plants = PLANTS
+        self.availability_beg = round(np.random.normal(WORKER_AVAILABILITY_BEG, 3))
+        self.availability_int = round(np.random.normal(WORKER_AVAILABILITY_INT, 2))
+        self.availability_adv = round(np.random.normal(WORKER_AVAILABILITY_ADV, 1))
+        self.productivity_beg = np.random.normal(PRODUCTIVITY_BEG, 0.03448)
+        self.productivity_int = np.random.normal(PRODUCTIVITY_INT, 0.0258)
+        self.productivity_adv = np.random.normal(PRODUCTIVITY_ADV, 0.01724)
 
     def step(self, action):
         """
@@ -41,11 +47,11 @@ class EconomicEnv(Env):
         h_i_t = new_action[1]
         h_a_t = new_action[2]
 
-        availability_beg = round(np.random.normal(WORKER_AVAILABILITY_BEG, 3))
-        availability_int = round(np.random.normal(WORKER_AVAILABILITY_INT, 2))
-        availability_adv = round(np.random.normal(WORKER_AVAILABILITY_ADV, 1))
+        # availability_beg = round(np.random.normal(WORKER_AVAILABILITY_BEG, 3))
+        # availability_int = round(np.random.normal(WORKER_AVAILABILITY_INT, 2))
+        # availability_adv = round(np.random.normal(WORKER_AVAILABILITY_ADV, 1))
 
-        if (h_b_t > availability_beg) or (h_i_t > availability_int) or (h_a_t > availability_adv):
+        if (h_b_t > self.availability_beg) or (h_i_t > self.availability_int) or (h_a_t > self.availability_adv):
             r_t = -M
             return self.state, r_t, done, info
 
@@ -67,9 +73,9 @@ class EconomicEnv(Env):
 
         c_t = c_hire + c_fire + c_wage
 
-        pl_b_t = m_b_t * np.random.normal(PRODUCTIVITY_BEG, 0.03448)
-        pl_i_t = m_i_t * np.random.normal(PRODUCTIVITY_INT, 0.0258)
-        pl_a_t = m_a_t * np.random.normal(PRODUCTIVITY_ADV, 0.01724)
+        pl_b_t = m_b_t * self.productivity_beg
+        pl_i_t = m_i_t * self.productivity_int
+        pl_a_t = m_a_t * self.productivity_adv
 
         pl_t = pl_b_t + pl_i_t + pl_a_t
 

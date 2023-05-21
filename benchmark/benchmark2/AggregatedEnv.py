@@ -1,12 +1,14 @@
 from gym import Env
 from gym.spaces import Discrete, Box
 import numpy as np
-from src.Parameters import *
+from Parameters import *
 
 
-class SocialEnv(Env):
+class Aggregated(Env):
+
     def __init__(self):
         super().__init__()
+
         self.state = np.array([0, 0, 0])
         self.action_space = Discrete((2 * MAX_ALLOWED_WORKER + 1) ** 3)
         self.observation_space = Box(low=np.array([0, 0, 0]), high=np.array(
@@ -78,12 +80,18 @@ class SocialEnv(Env):
 
         pl_t = pl_b_t + pl_i_t + pl_a_t
 
+        ql_b_t = pl_b_t * QUALITY_BEG
+        ql_i_t = pl_i_t * QUALITY_INT
+        ql_a_t = pl_a_t * QUALITY_ADV
+
+        ql_t = ql_b_t + ql_i_t + ql_a_t
+
         if pl_t >= p_t:
 
-            c_hire = HIRE_COST * (max(0, h_b_t) + max(0, h_i_t) + max(0, h_a_t))
             c_fire = FIRE_COST * (max(0, -h_b_t) + max(0, -h_i_t) + max(0, -h_a_t))
             c_wage = ((WAGE_BEG * m_b_t) + (WAGE_INT * m_i_t) + (WAGE_ADV * m_a_t)) * (p_t / pl_t)
             c_t = c_hire + c_fire + c_wage
+            ql_t = ql_t * p_t / pl_t
 
             if c_t > self.budget:
                 r_t = -M
@@ -93,11 +101,15 @@ class SocialEnv(Env):
                 self.state = np.asarray([m_b_t, m_i_t, m_a_t])
                 self.plants = 0
                 self.budget = self.budget - c_t
+
                 if c_t == 0:
                     r_t = -M
                 else:
-                    r_t = (m_b_t + m_i_t + m_a_t - max(0, -h_b_t) - max(0, -h_i_t) - max(0,-h_a_t)) / \
-                          MAX_ALLOWED_WORKER + 1
+                    r_t_econ = lambda_econ * (p_t / c_t + M * M)
+                    r_t_env = lambda_env * ((ql_t) / (p_t * QUALITY_ADV) + 1)
+                    r_t_soc = lambda_social * ((m_b_t + m_i_t + m_a_t - max(0, -h_b_t) - max(0, -h_i_t) - max(0,-h_a_t)) / \
+                          MAX_ALLOWED_WORKER + 1)
+                    r_t = r_t_econ + r_t_env + r_t_soc
 
                 done = True
                 return self.state, r_t, done, info
@@ -108,7 +120,13 @@ class SocialEnv(Env):
             return self.state, r_t, done, info
 
         if self.prune_len <= 1:
-            r_t = (m_b_t + m_i_t + m_a_t - max(0, -h_b_t) - max(0, -h_i_t) - max(0, -h_a_t)) / MAX_ALLOWED_WORKER
+            if c_t == 0:
+                r_t = 0
+            else:
+                r_t_econ = lambda_econ * (pl_t / c_t)
+                r_t_env = lambda_env * (ql_t) / (pl_t * QUALITY_ADV)
+                r_t_soc = lambda_social * ((m_b_t + m_i_t + m_a_t - max(0, -h_b_t) - max(0, -h_i_t) - max(0, -h_a_t)) / MAX_ALLOWED_WORKER)
+                r_t = r_t_econ + r_t_env + r_t_soc
 
             self.state = np.asarray([m_b_t, m_i_t, m_a_t])
             self.budget = self.budget - c_t
@@ -116,7 +134,15 @@ class SocialEnv(Env):
             done = True
             return self.state, r_t, done, info
 
-        r_t = (m_b_t + m_i_t + m_a_t - max(0, -h_b_t) - max(0, -h_i_t) - max(0, -h_a_t)) / MAX_ALLOWED_WORKER
+        if c_t == 0:
+            r_t = -M
+        elif pl_t == 0:
+            r_t = -M
+        else:
+            r_t_econ = lambda_econ * (pl_t / c_t)
+            r_t_env = lambda_env * ((ql_t) / (pl_t * QUALITY_ADV))
+            r_t_soc = lambda_social * ((m_b_t + m_i_t + m_a_t - max(0, -h_b_t) - max(0, -h_i_t) - max(0, -h_a_t)) / MAX_ALLOWED_WORKER)
+            r_t = r_t_econ + r_t_env + r_t_soc
 
         self.state = np.asarray([m_b_t, m_i_t, m_a_t])
         self.prune_len -= 1

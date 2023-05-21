@@ -5,8 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2c488df4-aaca-4f81-a234-220e49b165b4" name="Changes" comment="added aggregated.py">
+      <change afterPath="$PROJECT_DIR$/src/bnch1.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parameters.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/aggregated.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/aggregated.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/env/EconomicObj.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/env/EconomicObj.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/env/EnvironmentObj.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/env/EnvironmentObj.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/env/SocialObj.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/env/SocialObj.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +60,7 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected="Python.aggregated">
+  <component name="RunManager" selected="Python.bnch1">
     <configuration name="aggregated" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="HRP-by-Reinforcement-Learning" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -77,7 +83,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="aggregation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="bnch1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="HRP-by-Reinforcement-Learning" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -90,7 +96,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/aggregation.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/bnch1.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -167,11 +173,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.bnch1" />
         <item itemvalue="Python.aggregated" />
         <item itemvalue="Python.main (1)" />
         <item itemvalue="Python.train (2)" />
         <item itemvalue="Python.plot_results" />
-        <item itemvalue="Python.aggregation" />
       </list>
     </recent_temporary>
   </component>
@@ -195,7 +201,11 @@
       <workItem from="1672861023763" duration="4000" />
       <workItem from="1672861030821" duration="2180000" />
       <workItem from="1672892678729" duration="8045000" />
-      <workItem from="1673034628465" duration="1943000" />
+      <workItem from="1673034628465" duration="3110000" />
+      <workItem from="1683588218733" duration="8847000" />
+      <workItem from="1683831716309" duration="611000" />
+      <workItem from="1683914436342" duration="3127000" />
+      <workItem from="1684637442818" duration="993000" />
     </task>
     <task id="LOCAL-00001" summary="Added README file">
       <created>1671399085829</created>
@@ -351,7 +361,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673040698951</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="added aggregated.py">
+      <created>1673041892570</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1673041892570</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -407,8 +424,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/aggregated.py</url>
-          <line>234</line>
+          <line>232</line>
           <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/bnch1.py</url>
+          <line>141</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/bnch1.py</url>
+          <line>107</line>
+          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -421,8 +448,9 @@
     <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$pathlib.coverage" NAME="pathlib Coverage Results" MODIFIED="1672946506466" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9" />
     <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$train.coverage" NAME="train Coverage Results" MODIFIED="1672349647456" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$main.coverage" NAME="main Coverage Results" MODIFIED="1672355036294" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$bnch1.coverage" NAME="bnch1 Coverage Results" MODIFIED="1683926513992" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$EnvironmentObj.coverage" NAME="EnvironmentObj Coverage Results" MODIFIED="1671557867787" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$train__2_.coverage" NAME="train (2) Coverage Results" MODIFIED="1672961783201" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/train" />
-    <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$aggregated.coverage" NAME="aggregated Coverage Results" MODIFIED="1673041491035" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/HRP_by_Reinforcement_Learning$aggregated.coverage" NAME="aggregated Coverage Results" MODIFIED="1673042447014" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>

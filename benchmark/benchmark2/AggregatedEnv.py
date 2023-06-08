@@ -2,6 +2,7 @@ from gym import Env
 from gym.spaces import Discrete, Box
 import numpy as np
 from Parameters import *
+from utility import utility_calulator
 
 
 class Aggregated(Env):
@@ -105,11 +106,16 @@ class Aggregated(Env):
                 if c_t == 0:
                     r_t = -M
                 else:
-                    r_t_econ = lambda_econ * (p_t / c_t + M * M)
-                    r_t_env = lambda_env * ((ql_t) / (p_t * QUALITY_ADV) + 1)
-                    r_t_soc = lambda_social * ((m_b_t + m_i_t + m_a_t - max(0, -h_b_t) - max(0, -h_i_t) - max(0,-h_a_t)) / \
-                          MAX_ALLOWED_WORKER + 1)
-                    r_t = r_t_econ + r_t_env + r_t_soc
+                    r_t_econ = p_t / c_t + M * M
+                    r_t_env = (ql_t) / (p_t * QUALITY_ADV) + 1
+                    r_t_soc = (m_b_t + m_i_t + m_a_t - max(0, -h_b_t) - max(0, -h_i_t) - max(0,
+                                                                                             -h_a_t)) / MAX_ALLOWED_WORKER + 1
+
+                    r_t_econ_util = utility_calulator(r_t_econ, worst_econ, best_econ)
+                    r_t_env_util = utility_calulator(r_t_env, worst_env, best_env)
+                    r_t_soc_util = utility_calulator(r_t_soc, worst_soc, best_soc)
+
+                    r_t = lambda_econ * r_t_econ_util + lambda_env * r_t_env_util + lambda_social * r_t_soc_util
 
                 done = True
                 return self.state, r_t, done, info
@@ -123,10 +129,16 @@ class Aggregated(Env):
             if c_t == 0:
                 r_t = 0
             else:
-                r_t_econ = lambda_econ * (pl_t / c_t)
-                r_t_env = lambda_env * (ql_t) / (pl_t * QUALITY_ADV)
-                r_t_soc = lambda_social * ((m_b_t + m_i_t + m_a_t - max(0, -h_b_t) - max(0, -h_i_t) - max(0, -h_a_t)) / MAX_ALLOWED_WORKER)
-                r_t = r_t_econ + r_t_env + r_t_soc
+                r_t_econ = p_t / c_t + M * M
+                r_t_env = (ql_t) / (p_t * QUALITY_ADV) + 1
+                r_t_soc = (m_b_t + m_i_t + m_a_t - max(0, -h_b_t) - max(0, -h_i_t) - max(0,
+                                                                                         -h_a_t)) / MAX_ALLOWED_WORKER + 1
+
+                r_t_econ_util = utility_calulator(r_t_econ, worst_econ, best_econ)
+                r_t_env_util = utility_calulator(r_t_env, worst_env, best_env)
+                r_t_soc_util = utility_calulator(r_t_soc, worst_soc, best_soc)
+
+                r_t = lambda_econ * r_t_econ_util + lambda_env * r_t_env_util + lambda_social * r_t_soc_util
 
             self.state = np.asarray([m_b_t, m_i_t, m_a_t])
             self.budget = self.budget - c_t
@@ -139,10 +151,16 @@ class Aggregated(Env):
         elif pl_t == 0:
             r_t = -M
         else:
-            r_t_econ = lambda_econ * (pl_t / c_t)
-            r_t_env = lambda_env * ((ql_t) / (pl_t * QUALITY_ADV))
-            r_t_soc = lambda_social * ((m_b_t + m_i_t + m_a_t - max(0, -h_b_t) - max(0, -h_i_t) - max(0, -h_a_t)) / MAX_ALLOWED_WORKER)
-            r_t = r_t_econ + r_t_env + r_t_soc
+            r_t_econ = p_t / c_t + M * M
+            r_t_env = (ql_t) / (p_t * QUALITY_ADV) + 1
+            r_t_soc = (m_b_t + m_i_t + m_a_t - max(0, -h_b_t) - max(0, -h_i_t) - max(0,
+                                                                                     -h_a_t)) / MAX_ALLOWED_WORKER + 1
+
+            r_t_econ_util = utility_calulator(r_t_econ, worst_econ, best_econ)
+            r_t_env_util = utility_calulator(r_t_env, worst_env, best_env)
+            r_t_soc_util = utility_calulator(r_t_soc, worst_soc, best_soc)
+
+            r_t = lambda_econ * r_t_econ_util + lambda_env * r_t_env_util + lambda_social * r_t_soc_util
 
         self.state = np.asarray([m_b_t, m_i_t, m_a_t])
         self.prune_len -= 1

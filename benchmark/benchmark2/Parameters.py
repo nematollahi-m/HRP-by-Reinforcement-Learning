@@ -48,3 +48,12 @@ time_steps = 400000
 beam_size = 7
 
 state_to_save = 0
+
+
+best_env = M + 1
+best_soc = M + 1
+best_econ = M + 1
+# min(hired, current workers)
+worst_env = -M
+worst_soc = -M
+worst_econ = -M

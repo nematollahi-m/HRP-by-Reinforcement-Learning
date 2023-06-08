@@ -6,6 +6,7 @@ from Parameters import *
 from saveFunctions import *
 from tqdm import tqdm
 import math
+import pandas as pd
 
 import warnings
 
@@ -32,7 +33,7 @@ def calculate_utility(rho1, m_x, n_x, q_value):
     return u_a
 
 
-def best_action(econ_env, env_env, social_env, state, remain_plants, remain_budget):
+def best_action(econ_env, env_env, social_env, state, remain_plants, remain_budget, save_flag):
     # case 1: rho = -3, Econ: 0.5, Env: 0.25, Social: 0.25
 
     reward_econ = np.zeros([econ_env.action_space.n, 1])
@@ -105,6 +106,22 @@ def best_action(econ_env, env_env, social_env, state, remain_plants, remain_budg
     total_utility = (lambda_econ * utilities_econ) + (lambda_env * utilities_env) + (lambda_social * utilities_social)
     new_action_id = np.argmax(total_utility)
 
+    if save_flag == True:
+      csv_data = {
+              'Reward Econ': np.array(reward_econ.reshape(reward_econ.shape[0],)),
+              'Reward Env': np.array(reward_env.reshape(reward_env.shape[0], )),
+              'Reward Soc': np.array(reward_social.reshape(reward_social.shape[0],)),
+              'Reward Econ Norm': np.array(reward_econ_norm.reshape(reward_econ_norm.shape[0],)),
+              'Reward Env Norm': np.array(reward_env_norm.reshape(reward_env_norm.shape[0],)),
+              'Reward Soc Norm': np.array(reward_social_norm).reshape(reward_social_norm.shape[0],),
+              'Utility Econ': np.array(utilities_econ),
+              'Utility Env': np.array(utilities_env),
+              'Utility Soc': np.array(utilities_social),
+              'Total Utility': np.array(total_utility)
+      }
+    csv_df = pd.DataFrame.from_dict(csv_data)
+    csv_df.to_csv('output.csv', index=False)
+
     return new_action_id
 
 
@@ -137,7 +154,11 @@ def main():
     econ_env.productivity_adv, env_env.productivity_adv, social_env.productivity_adv = productivity_adv, productivity_adv, productivity_adv
 
     for step in range(n_steps):
-        action_id = best_action(econ_env, env_env, social_env, state, remain_plants, remain_budget)
+        if step == state_to_save:
+          save_flag = True
+        else:
+            save_flag = False
+        action_id = best_action(econ_env, env_env, social_env, state, remain_plants, remain_budget, save_flag)
         print("Step {}".format(step + 1))
         obs, reward, done, _ = econ_env.step(action_id)
         remain_plants = econ_env.plants

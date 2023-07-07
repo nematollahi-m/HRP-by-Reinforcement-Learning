@@ -7,8 +7,8 @@ import numpy as np
 from tqdm import tqdm
 import time
 import warnings
-
 warnings.filterwarnings('ignore')
+
 
 def calculate_constants(rho1, x_best, x_worst):
     if rho1 == 0:
@@ -29,48 +29,6 @@ def calculate_utility(rho1, m_x, n_x, q_value):
     u_a = float(m_x - (n_x * (math.exp((-q_value * rho1)))))
     return u_a
 
-
-def normalize(reward):
-    mini = 1000
-    maxi = 0
-    for i in range(len(reward)):
-        if reward[i] == -10:
-            reward[i] = np.nan
-        else:
-            if reward[i] < mini:
-                mini = reward[i]
-            if reward[i] > maxi:
-                maxi = reward[i]
-
-    for i in range(len(reward)):
-        if reward[i] != np.nan:
-            reward[i] = (reward[i] - mini) / (maxi - mini)
-
-    return reward, mini, maxi
-
-
-def calculate_eliminate_utility(con_m, con_n, reward_norm):
-    utilities = np.zeros(reward_norm.shape[0])
-    for i in range(len(reward_norm)):
-        if reward_norm[i] != np.nan:
-            utilities[i] = calculate_utility(rho, con_m, con_n, reward_norm[i])
-        else:
-            utilities[i] = np.nan
-    return utilities
-
-
-def find_max_utility(utilities):
-    maximum = 0
-    maximum_id = -1
-    for i in range(len(utilities)):
-        if utilities[i] == np.nan:
-            pass
-        elif utilities[i] > maximum:
-            maximum = utilities[i]
-            maximum_id = i
-    return maximum_id
-
-
 def best_action(state, remain_plants, remain_budget, avail_beg, avail_int, avail_adv, prod_beg, prod_int, prod_adv):
     econ_env = EconomicEnv()
     env_env = EnvironmentEnv()
@@ -83,7 +41,6 @@ def best_action(state, remain_plants, remain_budget, avail_beg, avail_int, avail
     # getting all the rewards from Econ:
     print('Rho:', rho, 'ECON:', lambda_econ, 'ENV:', lambda_env, 'Soc:', lambda_social)
     for action in tqdm(range(econ_env.action_space.n)):
-    #for action in tqdm(range(100)):
         econ_env.state = state
         econ_env.budget = remain_budget
         econ_env.plants = remain_plants
@@ -97,7 +54,6 @@ def best_action(state, remain_plants, remain_budget, avail_beg, avail_int, avail
 
     # getting all the rewards from Env
     for action in tqdm(range(env_env.action_space.n)):
-    #for action in tqdm(range(100)):
         env_env.state = state
         env_env.budget = remain_budget
         env_env.plants = remain_plants
@@ -111,7 +67,6 @@ def best_action(state, remain_plants, remain_budget, avail_beg, avail_int, avail
 
     # getting all the rewards from Social:
     for action in tqdm(range(social_env.action_space.n)):
-        # for action in tqdm(range(100)):
         social_env.state = state
         social_env.budget = remain_budget
         social_env.plants = remain_plants
@@ -125,30 +80,24 @@ def best_action(state, remain_plants, remain_budget, avail_beg, avail_int, avail
         social_env.productivity_adv = prod_adv
         _, reward_social[action], _, _ = social_env.step(action)
 
-    # best_econ = np.max(reward_econ)
-    # worst_econ = np.min(reward_econ)
-    #
-    # reward_econ_norm = (reward_econ - worst_econ) / (best_econ - worst_econ)
-    # best_econ = np.max(reward_econ_norm)
-    # worst_econ = np.min(reward_econ_norm)
-    #
-    # best_env = np.max(reward_env)
-    # worst_env = np.min(reward_env)
-    # reward_env_norm = (reward_env - worst_env) / (best_env - worst_env)
-    # best_env = np.max(reward_env_norm)
-    # worst_env = np.min(reward_env_norm)
-    #
-    # best_social = np.max(reward_social)
-    # worst_social = np.min(reward_social)
-    # reward_social_norm = (reward_social - worst_social) / (best_social - worst_social)
-    # best_social = np.max(reward_social_norm)
-    # worst_social = np.min(reward_social_norm)
+    best_econ = np.max(reward_econ)
+    worst_econ = np.min(reward_econ)
 
-    #################### Added remove this later
-    reward_econ_norm, worst_econ, best_econ = normalize(reward_econ)
-    reward_env_norm, worst_env, best_env = normalize(reward_env)
-    reward_social_norm, worst_social, best_social = normalize(reward_social)
-    #######################
+    reward_econ_norm = (reward_econ - worst_econ) / (best_econ - worst_econ)
+    best_econ = np.max(reward_econ_norm)
+    worst_econ = np.min(reward_econ_norm)
+
+    best_env = np.max(reward_env)
+    worst_env = np.min(reward_env)
+    reward_env_norm = (reward_env - worst_env) / (best_env - worst_env)
+    best_env = np.max(reward_env_norm)
+    worst_env = np.min(reward_env_norm)
+
+    best_social = np.max(reward_social)
+    worst_social = np.min(reward_social)
+    reward_social_norm = (reward_social - worst_social) / (best_social - worst_social)
+    best_social = np.max(reward_social_norm)
+    worst_social = np.min(reward_social_norm)
 
     con_econ_m, con_econ_n = calculate_constants(rho, best_econ, worst_econ)
     con_env_m, con_env_n = calculate_constants(rho, best_env, worst_env)
@@ -158,26 +107,13 @@ def best_action(state, remain_plants, remain_budget, avail_beg, avail_int, avail
     utilities_env = np.zeros(reward_env_norm.shape[0])
     utilities_social = np.zeros(reward_social_norm.shape[0])
 
-    ################# Added remove this later
-    utilities_econ = calculate_eliminate_utility(con_econ_m, con_econ_n, reward_econ_norm)
-    utilities_env = calculate_eliminate_utility(con_env_m, con_env_n, reward_env_norm)
-    utilities_social = calculate_eliminate_utility(con_social_m, con_social_n, reward_social_norm)
-    #################
-
-    # for i in range(0, utilities_econ.shape[0]):
-    #     utilities_econ[i] = calculate_utility(rho, con_econ_m, con_econ_n, reward_econ_norm[i])
-    #     utilities_env[i] = calculate_utility(rho, con_env_m, con_env_n, reward_env_norm[i])
-    #     utilities_social[i] = calculate_utility(rho, con_social_m, con_social_n, reward_social_norm[i])
-
+    for i in range(0, utilities_econ.shape[0]):
+        utilities_econ[i] = calculate_utility(rho, con_econ_m, con_econ_n, reward_econ_norm[i])
+        utilities_env[i] = calculate_utility(rho, con_env_m, con_env_n, reward_env_norm[i])
+        utilities_social[i] = calculate_utility(rho, con_social_m, con_social_n, reward_social_norm[i])
 
     total_utility = (lambda_econ * utilities_econ) + (lambda_env * utilities_env) + (lambda_social * utilities_social)
-
-
-    #new_action_id = np.argmax(total_utility)
-
-    ################# Added remove this later
-    new_action_id = find_max_utility(total_utility)
-    #################
+    new_action_id = np.argmax(total_utility)
 
     return new_action_id
 
@@ -197,12 +133,16 @@ def main():
     total_env = 0
     total_social = 0
 
+    # Setting availability and productivity to constant numbers to avoid conflicts between the three environments
+    # In our model this number is random and not predictable
+
     availability_beg = 20
     availability_int = 15
     availability_adv = 12
-    productivity_beg = 0.24 * 1450
-    productivity_int = 0.38 * 1450
-    productivity_adv = 0.52 * 1450
+    productivity_beg = 0.24
+    productivity_int = 0.38
+    productivity_adv = 0.52
+
     econ_env.availability_beg, env_env.availability_beg, social_env.availability_beg = availability_beg, availability_beg, availability_beg
     econ_env.availability_int, env_env.availability_int, social_env.availability_int = availability_int, availability_int, availability_int
     econ_env.availability_adv, env_env.availability_adv, social_env.availability_adv = availability_adv, availability_adv, availability_adv
@@ -229,6 +169,10 @@ def main():
 
         print('remaining budget:', remain_budget)
         print('remaining plants:', remain_plants)
+        print('Reward Econ: ', reward_econ)
+        print('Reward Env:', reward_env)
+        print('Reward Soc: ', reward_social)
+
         state = obs
         total_econ += reward_econ
         total_env += reward_env
@@ -244,7 +188,6 @@ def main():
 if __name__ == '__main__':
     start_time = time.time()
     print('(1/9)Economic, Rho = -3')
-    #Used for the Utility function
     rho = -3
     lambda_econ, lambda_env, lambda_social = 0.5, 0.25, 0.25
     main()

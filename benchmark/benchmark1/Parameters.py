@@ -2,15 +2,15 @@
 
 MAX_ALLOWED_WORKER = 12
 BUDGET = 100000
-PLANTS = 30 * 1450
+PLANTS = 30
 
 WAGE_BEG = 15.65 * 8 * 5
 WAGE_INT = 20 * 8 * 5
 WAGE_ADV = 30 * 8 * 5
 
-PRODUCTIVITY_BEG = (700 / (2 * 1450)) * 1450
-PRODUCTIVITY_INT = (1100 / (2 * 1450)) * 1450
-PRODUCTIVITY_ADV = (1500 / (2 * 1450)) * 1450
+PRODUCTIVITY_BEG = 700 / (2 * 1450)
+PRODUCTIVITY_INT = 1100 / (2 * 1450)
+PRODUCTIVITY_ADV = 1500 / (2 * 1450)
 
 STD_PRODUCTIVITY_BEG = 100 / (2 * 1450)
 STD_PRODUCTIVITY_INT = 75 / (2 * 1450)
@@ -34,15 +34,4 @@ action_size = ((MAX_ALLOWED_WORKER + 1) * (MAX_ALLOWED_WORKER + 1)) ** 3
 # Reward constant
 M = 10
 
-#Used for the Utility function
-rho = 0
-
-# Economic, Environmental, and Social Coefficients
-lambda_econ = 0.25
-lambda_env = 0.25
-lambda_social = 0.5
-
-# number of training time steps
-time_steps = 400000
-
-beam_size = 7
+state_to_save = 0

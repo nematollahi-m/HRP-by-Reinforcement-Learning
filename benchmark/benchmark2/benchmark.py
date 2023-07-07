@@ -8,6 +8,7 @@ from stable_baselines3 import DQN
 from Parameters import *
 from AggregatedEnv import Aggregated
 import warnings
+
 warnings.filterwarnings('ignore')
 
 
@@ -29,22 +30,24 @@ class SaveOnBestTrainingRewardCallback(BaseCallback):
     def _on_step(self) -> bool:
         if self.n_calls % self.check_freq == 0:
 
-          # Retrieve training reward
-          x, y = ts2xy(load_results(self.log_dir), 'timesteps')
-          if len(x) > 0:
-              # Mean training reward over the last 100 episodes
-              mean_reward = np.mean(y[-100:])
-              if self.verbose > 0:
-                print("Num timesteps: {}".format(self.num_timesteps))
-                print("Best mean reward: {:.2f} - Last mean reward per episode: {:.2f}".format(self.best_mean_reward, mean_reward))
+            # Retrieve training reward
+            x, y = ts2xy(load_results(self.log_dir), 'timesteps')
+            if len(x) > 0:
+                # Mean training reward over the last 100 episodes
+                mean_reward = np.mean(y[-100:])
+                if self.verbose > 0:
+                    print("Num timesteps: {}".format(self.num_timesteps))
+                    print(
+                        "Best mean reward: {:.2f} - Last mean reward per episode: {:.2f}".format(self.best_mean_reward,
+                                                                                                 mean_reward))
 
-              # New best model, you could save the agent here
-              if mean_reward > self.best_mean_reward:
-                  self.best_mean_reward = mean_reward
-                  # Example for saving best model
-                  if self.verbose > 0:
-                    print("Saving new best model to {}".format(self.save_path))
-                  self.model.save(self.save_path)
+                # New best model, you could save the agent here
+                if mean_reward > self.best_mean_reward:
+                    self.best_mean_reward = mean_reward
+                    # Example for saving best model
+                    if self.verbose > 0:
+                        print("Saving new best model to {}".format(self.save_path))
+                    self.model.save(self.save_path)
 
         return True
 
@@ -55,7 +58,6 @@ if th.cuda.is_available():
 else:
     print('No GPU')
     device = 'cpu'
-
 
 """
     Training Economic Agent - saving the model
@@ -68,10 +70,10 @@ os.makedirs(log_dir, exist_ok=True)
 agg_env = Monitor(agg_env, log_dir)
 callback = SaveOnBestTrainingRewardCallback(check_freq=1000, log_dir=log_dir)
 agg_model = DQN('MlpPolicy', agg_env, learning_rate=0.0001, exploration_fraction=0.8, exploration_final_eps=0.001,
-                     exploration_initial_eps=1.0, verbose=1, device=device)
+                exploration_initial_eps=1.0, verbose=1, device=device)
 agg_model.learn(total_timesteps=time_steps, callback=callback)
 
-print('********* Done with training Aggragated *********')
+print('********* Done with training Aggregated *********')
 
 # saving the model
 print('********* Saving the aggregated model *********')
@@ -87,56 +89,37 @@ print(f"The loaded_model has {loaded_agg_model.replay_buffer.size()} transitions
 agg_policy = agg_model.policy
 agg_policy.save("../../model/agg_policy")
 
+# loading the model
 
-# """
-#     Training Environment Agent - saving the model
-# """
-# print('********* Training Environment *********')
-# environmnet_env = EnvironmentEnv()
-# log_dir = "../../tmp/Environmental/"
-# os.makedirs(log_dir, exist_ok=True)
-# environmnet_env = Monitor(environmnet_env, log_dir)
-# callback = SaveOnBestTrainingRewardCallback(check_freq=1000, log_dir=log_dir)
-# environmnet_model = DQN('MlpPolicy', environmnet_env, learning_rate=0.0001, exploration_fraction=0.8, exploration_final_eps=0.001,
-#                      exploration_initial_eps=1.0, verbose=1, device=device, tensorboard_log="./dqn_environmnet/")
-# environmnet_model.learn(total_timesteps=time_steps, callback=callback)
-# print('********* Done with training Environment *********')
-#
-# # saving the model
-# print('********* Saving the environment model *********')
-# environmnet_model.save("../../model/environmental_model")
-# loaded_environmnet_model = DQN.load("../../model/environmental_model")
-# print(f"The loaded_model has {loaded_environmnet_model.replay_buffer.size()} transitions in its buffer")
-#
-# environmnet_model.save_replay_buffer("../../model/environmental_model_replay_buffer")
-# loaded_environmnet_model.load_replay_buffer("../../model/environmental_model_replay_buffer")
-# print(f"The loaded_model has {loaded_environmnet_model.replay_buffer.size()} transitions in its buffer")
-#
-# environmnet_policy = environmnet_model.policy
-# environmnet_policy.save("../../model/environmental_policy")
-#
-# """
-#     Training Social Agent - saving the model
-# """
-# social_env = SocialEnv()
-# log_dir = "../../tmp/Social/"
-# os.makedirs(log_dir, exist_ok=True)
-# social_env = Monitor(social_env, log_dir)
-# callback = SaveOnBestTrainingRewardCallback(check_freq=1000, log_dir=log_dir)
-# social_model = DQN('MlpPolicy', social_env, learning_rate=0.0001, exploration_fraction=0.8, exploration_final_eps=0.001,
-#                      exploration_initial_eps=1.0, verbose=1, device=device, tensorboard_log="./dqn_social/")
-# social_model.learn(total_timesteps=time_steps, callback=callback)
-#
-# social_model.save("../../model/social_model")
-# loaded_social_model = DQN.load("../../model/social_model")
-# print(f"The loaded_model has {loaded_social_model.replay_buffer.size()} transitions in its buffer")
-#
-# social_model.save_replay_buffer("../../model/social_model_replay_buffer")
-# loaded_social_model.load_replay_buffer("../../model/social_model_replay_buffer")
-# print(f"The loaded_model has {loaded_social_model.replay_buffer.size()} transitions in its buffer")
-#
-# social_policy = social_model.policy
-# social_policy.save("../../model/social_policy")
-#
-#
-#
+path = "../../model/agg_model"
+loaded_model = DQN.load(path)
+
+agg_env = Aggregated()
+obs_agg = agg_env.reset()
+n_steps = PRUNE_LENGTH
+print('******************************************************')
+track_reward_agg = []
+mapping = tuple \
+    (np.ndindex(((2 * MAX_ALLOWED_WORKER) + 1, (2 * MAX_ALLOWED_WORKER) + 1, (2 * MAX_ALLOWED_WORKER) + 1)))
+
+for step in range(n_steps):
+
+    action_agg, _ = loaded_model.predict(obs_agg, deterministic=True)
+    action_agg_unroll = mapping[action_agg]
+    print("Selected Action:", action_agg_unroll)
+    zz = "Selected Action: " + str(action_agg_unroll) + '\n'
+
+    obs_agg, reward_agg, done_agg, info = agg_env.step(action_agg)
+    track_reward_agg = np.append(track_reward_agg, reward_agg)
+    print('State', obs_agg, 'Reward= ', reward_agg)
+    zz = 'State: ' + str(obs_agg) + 'Reward= ' + str(reward_agg) + '\n'
+
+    print('******************************************************')
+
+    if done_agg is True:
+        remaining_b1 = round(agg_env.budget, 3)
+        print('Remaining Budget = ', str(remaining_b1) + '/' + str(BUDGET), 'Un-pruned Plants = ',
+              str(agg_env.plants) + '/' + str(PLANTS))
+        zz = 'Remaining Budget = ' + str(remaining_b1) + '/' + str(BUDGET) + 'Un-pruned Plants = ' + str(
+            agg_env.plants) + '/' + str(PLANTS) + '\n'
+        break

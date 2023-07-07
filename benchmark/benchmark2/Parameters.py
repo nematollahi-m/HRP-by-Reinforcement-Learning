@@ -2,7 +2,7 @@
 
 MAX_ALLOWED_WORKER = 12
 BUDGET = 100000
-PLANTS = 30 * 1450
+PLANTS = 30
 
 WAGE_BEG = 15.65 * 8 * 5
 WAGE_INT = 20 * 8 * 5
@@ -35,12 +35,12 @@ action_size = ((MAX_ALLOWED_WORKER + 1) * (MAX_ALLOWED_WORKER + 1)) ** 3
 M = 10
 
 #Used for the Utility function
-rho = -3
+rho = 0
 
 # Economic, Environmental, and Social Coefficients
-lambda_econ = 0.25
+lambda_econ = 0.5
 lambda_env = 0.25
-lambda_social = 0.5
+lambda_social = 0.25
 
 # number of training time steps
 time_steps = 400000
@@ -49,11 +49,19 @@ beam_size = 7
 
 state_to_save = 0
 
+best_env = 2
+best_soc = 2
+best_econ = (PLANTS / min(HIRE_COST, WAGE_BEG)) + M*M
+worst_env = 0
+worst_soc = 0
+worst_econ = 0
 
-best_env = M + 1
-best_soc = M + 1
-best_econ = M + 1
-# min(hired, current workers)
-worst_env = -M
-worst_soc = -M
-worst_econ = -M
+print_data = ''
+t = 'Lambda econ: ' + str(lambda_econ) + '\n'
+print_data += t
+t = 'Lambda env: ' + str(lambda_env) + '\n'
+print_data += t
+t = 'Lambda soc: ' + str(lambda_social) + '\n'
+print_data += t
+t = 'Rho: ' + str(rho) + '\n'
+print_data += t

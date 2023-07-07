@@ -4,7 +4,6 @@ import numpy as np
 from Parameters import *
 from utility import utility_calulator
 
-
 class Aggregated(Env):
 
     def __init__(self):
@@ -48,10 +47,6 @@ class Aggregated(Env):
         h_b_t = new_action[0]
         h_i_t = new_action[1]
         h_a_t = new_action[2]
-
-        # availability_beg = round(np.random.normal(WORKER_AVAILABILITY_BEG, 3))
-        # availability_int = round(np.random.normal(WORKER_AVAILABILITY_INT, 2))
-        # availability_adv = round(np.random.normal(WORKER_AVAILABILITY_ADV, 1))
 
         if (h_b_t > self.availability_beg) or (h_i_t > self.availability_int) or (h_a_t > self.availability_adv):
             r_t = -M
@@ -106,16 +101,19 @@ class Aggregated(Env):
                 if c_t == 0:
                     r_t = -M
                 else:
-                    r_t_econ = p_t / c_t + M * M
+                    r_t_econ = p_t / c_t + M*M
                     r_t_env = (ql_t) / (p_t * QUALITY_ADV) + 1
-                    r_t_soc = (m_b_t + m_i_t + m_a_t - max(0, -h_b_t) - max(0, -h_i_t) - max(0,
-                                                                                             -h_a_t)) / MAX_ALLOWED_WORKER + 1
-
+                    r_t_soc = (m_b_t + m_i_t + m_a_t) / MAX_ALLOWED_WORKER + 1
                     r_t_econ_util = utility_calulator(r_t_econ, worst_econ, best_econ)
                     r_t_env_util = utility_calulator(r_t_env, worst_env, best_env)
                     r_t_soc_util = utility_calulator(r_t_soc, worst_soc, best_soc)
 
-                    r_t = lambda_econ * r_t_econ_util + lambda_env * r_t_env_util + lambda_social * r_t_soc_util
+                    # This is for testing:
+                    # print('reward econ: ',r_t_econ)
+                    # print('reward env: ',r_t_env)
+                    # print('reward soc: ', r_t_soc)
+
+                    r_t = lambda_econ * r_t_econ_util + lambda_env * r_t_env_util + lambda_social * r_t_soc_util+M*M
 
                 done = True
                 return self.state, r_t, done, info
@@ -129,16 +127,20 @@ class Aggregated(Env):
             if c_t == 0:
                 r_t = 0
             else:
-                r_t_econ = p_t / c_t + M * M
-                r_t_env = (ql_t) / (p_t * QUALITY_ADV) + 1
-                r_t_soc = (m_b_t + m_i_t + m_a_t - max(0, -h_b_t) - max(0, -h_i_t) - max(0,
-                                                                                         -h_a_t)) / MAX_ALLOWED_WORKER + 1
+              r_t_econ = pl_t / c_t
+              r_t_env = (ql_t) / (p_t * QUALITY_ADV)
+              r_t_soc = (m_b_t + m_i_t + m_a_t) / MAX_ALLOWED_WORKER
 
-                r_t_econ_util = utility_calulator(r_t_econ, worst_econ, best_econ)
-                r_t_env_util = utility_calulator(r_t_env, worst_env, best_env)
-                r_t_soc_util = utility_calulator(r_t_soc, worst_soc, best_soc)
+              r_t_econ_util = utility_calulator(r_t_econ, worst_econ, best_econ)
+              r_t_env_util = utility_calulator(r_t_env, worst_env, best_env)
+              r_t_soc_util = utility_calulator(r_t_soc, worst_soc, best_soc)
 
-                r_t = lambda_econ * r_t_econ_util + lambda_env * r_t_env_util + lambda_social * r_t_soc_util
+              # his is for testing:
+              # print('reward econ: ',r_t_econ)
+              # print('reward env: ',r_t_env)
+              # print('reward soc: ',r_t_soc)
+
+              r_t = lambda_econ * r_t_econ_util + lambda_env * r_t_env_util + lambda_social * r_t_soc_util
 
             self.state = np.asarray([m_b_t, m_i_t, m_a_t])
             self.budget = self.budget - c_t
@@ -151,16 +153,20 @@ class Aggregated(Env):
         elif pl_t == 0:
             r_t = -M
         else:
-            r_t_econ = p_t / c_t + M * M
-            r_t_env = (ql_t) / (p_t * QUALITY_ADV) + 1
-            r_t_soc = (m_b_t + m_i_t + m_a_t - max(0, -h_b_t) - max(0, -h_i_t) - max(0,
-                                                                                     -h_a_t)) / MAX_ALLOWED_WORKER + 1
+          r_t_econ = pl_t / c_t
+          r_t_env = (ql_t) / (pl_t * QUALITY_ADV)
+          r_t_soc = (m_b_t + m_i_t + m_a_t) / MAX_ALLOWED_WORKER
 
-            r_t_econ_util = utility_calulator(r_t_econ, worst_econ, best_econ)
-            r_t_env_util = utility_calulator(r_t_env, worst_env, best_env)
-            r_t_soc_util = utility_calulator(r_t_soc, worst_soc, best_soc)
+          r_t_econ_util = utility_calulator(r_t_econ, worst_econ, best_econ)
+          r_t_env_util = utility_calulator(r_t_env, worst_env, best_env)
+          r_t_soc_util = utility_calulator(r_t_soc, worst_soc, best_soc)
 
-            r_t = lambda_econ * r_t_econ_util + lambda_env * r_t_env_util + lambda_social * r_t_soc_util
+          # This is for testing:
+          # print('reward econ: ',r_t_econ)
+          # print('reward env: ',r_t_env)
+          # print('reward soc: ', r_t_soc)
+
+          r_t = lambda_econ * r_t_econ_util + lambda_env * r_t_env_util + lambda_social * r_t_soc_util
 
         self.state = np.asarray([m_b_t, m_i_t, m_a_t])
         self.prune_len -= 1
@@ -178,5 +184,8 @@ class Aggregated(Env):
         self.budget = BUDGET
         self.plants = PLANTS
         return self.state
+
+
+
 
 

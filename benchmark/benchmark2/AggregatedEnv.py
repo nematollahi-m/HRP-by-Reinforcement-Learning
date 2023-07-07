@@ -27,6 +27,7 @@ class Aggregated(Env):
         """
             Given the action, this function updates the environment (the state, remaining budget, and remaining unpruned plants)
         """
+
         done = False
         info = {}
 
